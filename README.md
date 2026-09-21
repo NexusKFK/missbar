@@ -65,6 +65,49 @@ There is no signed release. Download `missbar.zip` from
 pick the latest successful run and take the artifact — or from
 [Releases](https://github.com/NexusKFK/missbar/releases) if one has been tagged.
 
+### Recommended: install with a local signing identity
+
+```sh
+git clone https://github.com/NexusKFK/missbar.git && cd missbar
+./scripts/create-signing-identity.sh   # once per machine
+./scripts/install-local.sh             # downloads, re-signs, installs, launches
+```
+
+Then grant **Accessibility** and **Screen Recording** when missbar asks. You only have to do
+that once — including across updates, which is the reason for the first script. Re-run
+`./scripts/install-local.sh` to move to a newer build.
+
+<details>
+<summary>Why re-signing matters</summary>
+
+macOS pins a permission to the app's *designated requirement*. For an ad-hoc signed build that
+requirement is a bare hash of the code:
+
+```
+designated => cdhash H"500f28937ed4b40dae09dc89ed968af5d0e06a15"
+```
+
+It changes with every build, so each update looks like a different program and silently loses
+its Accessibility and Screen Recording grants — the toggle stays switched on in System Settings
+while the running app is not the one it refers to.
+
+`create-signing-identity.sh` makes a self-signed certificate that never leaves your Mac, and
+`install-local.sh` re-signs each download with it. The requirement then becomes:
+
+```
+designated => identifier "com.nexuskfk.missbar" and certificate root = H"04c1d506…"
+```
+
+which is identical for every build signed with that certificate, so the grants carry over.
+
+This is not an Apple Developer ID. It does nothing for Gatekeeper and nothing on anyone else's
+machine; it exists only so this Mac can recognize successive builds as the same program. Keep
+`~/.local/share/missbar-signing` backed up — losing the key means granting everything again.
+
+</details>
+
+### Plain install
+
 ```sh
 unzip missbar.zip
 mv missbar.app /Applications/
@@ -77,9 +120,9 @@ open /Applications/missbar.app
 Then grant **Accessibility** and **Screen Recording** in System Settings ▸ Privacy & Security.
 
 > [!IMPORTANT]
-> An ad-hoc signature is recomputed on every build, so macOS treats each new build as a
-> different program. After replacing the app with a newer one you will have to remove the old
-> entries in Privacy & Security and grant both permissions again.
+> Installed this way, both permissions have to be granted again after every update, and the
+> stale entry has to be removed first (`tccutil reset Accessibility com.nexuskfk.missbar`).
+> `scripts/install-local.sh` above exists to avoid this.
 
 ### Uninstall
 

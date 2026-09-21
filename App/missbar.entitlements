@@ -3,26 +3,19 @@
 <plist version="1.0">
 <dict>
 	<!--
-	  Required because this fork is ad-hoc signed rather than Developer ID-signed.
+	  Required because this fork is ad-hoc signed rather than Developer ID-signed. The hardened
+	  runtime enables library validation, which only lets a process load libraries sharing its
+	  Team ID; an ad-hoc signature has none, so dyld refuses to load the app's own bundled
+	  Sparkle.framework and the process dies before main().
 
-	  The target enables the hardened runtime, which turns on library validation: a process may
-	  only load libraries signed by the same Team ID as its main binary, or platform binaries.
-	  Ice 2's own releases satisfy that because the app and its embedded frameworks are all
-	  signed with one Developer ID. An ad-hoc signature carries no Team ID at all, so
-	  Sparkle.framework fails the check and dyld refuses to load it:
+	  docs/RELEASING.md explains it in full, including why codesign's own verification does not
+	  catch it.
 
-	      Library not loaded: @rpath/Sparkle.framework/Versions/B/Sparkle
-	      Reason: ... mapping process and mapped file (non-platform) have different Team IDs
-
-	  The app terminates at launch, before any of its own code runs.
-
-	  Note that `codesign --verify --deep --strict` does NOT catch this. It checks that each
-	  nested component carries a valid signature, not that the Team IDs agree, so the build
-	  verifies clean and then fails the first time it is actually run. `.github/workflows/build.yml`
-	  has a smoke step that loads the binary for this reason.
-
-	  If this app is ever signed with a real Developer ID, this entitlement can be dropped —
-	  every component would then share one Team ID.
+	  Keep every comment in this file free of doubled hyphens. XML forbids them inside a
+	  comment, and while Xcode's parser tolerates it, the one AMFI uses when codesign applies
+	  entitlements does not: it fails with "AMFIUnserializeXML: syntax error", naming a line
+	  number in the comment rather than the real problem. That makes manual re-signing (see
+	  scripts/install-local.sh) fail for a reason nothing about the message suggests.
 	-->
 	<key>com.apple.security.cs.disable-library-validation</key>
 	<true/>

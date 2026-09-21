@@ -56,6 +56,20 @@ reason, and asserts the entitlement survived into the signed bundle.
 
 Signing with a real Developer ID would make the entitlement unnecessary.
 
+## The XML comment trap in the entitlements file
+
+Comments in `App/missbar.entitlements` must contain no doubled hyphens.
+
+XML forbids them inside a comment. Xcode's parser tolerates it, so the project builds and the
+entitlement reaches the bundle; the parser AMFI uses when `codesign` applies entitlements
+directly does not, and fails with
+
+    Failed to parse entitlements: AMFIUnserializeXML: syntax error near line 19
+
+pointing at a line in the comment rather than at the real problem. The first version of that
+file described the fix using `codesign` flag names, which put a doubled hyphen in the prose and
+broke every manual re-signing while CI stayed green.
+
 ## Installing what you built
 
 The build is ad-hoc signed, so Gatekeeper quarantines the download and macOS treats every build
