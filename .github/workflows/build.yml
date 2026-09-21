@@ -1,0 +1,72 @@
+name: Build missbar
+
+# Produces a downloadable missbar.app. There is no Apple Developer ID behind this fork, so the
+# app is ad-hoc signed ("-") rather than Developer ID-signed and notarized. That is enough for
+# macOS to run it and for Accessibility/Screen Recording grants to stick, but Gatekeeper will
+# quarantine the download until the user clears the attribute — see the README.
+#
+# Ad-hoc signatures are per-build: the code directory hash changes every time this workflow
+# runs, so macOS treats each new build as a different program and the permission grants have to
+# be given again after replacing the app.
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    # Same image the test job uses. The macOS 26 SDK is the one this project targets; the
+    # macOS 27 support is written against runtime-resolved APIs, so it builds on that SDK.
+    runs-on: macos-26
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Xcode version
+        run: xcodebuild -version
+
+      - name: Build (Release, ad-hoc signed)
+        run: |
+          xcodebuild build \
+            -project Ice.xcodeproj \
+            -scheme Ice \
+            -configuration Release \
+            -destination 'platform=macOS,arch=arm64' \
+            -derivedDataPath build \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGN_STYLE=Manual \
+            DEVELOPMENT_TEAM=""
+
+      # Fail loudly here rather than uploading an empty archive: a build that "succeeds" while
+      # producing no bundle is the failure mode worth catching.
+      - name: Verify the app bundle
+        run: |
+          APP="build/Build/Products/Release/missbar.app"
+          test -d "$APP" || { echo "::error::$APP was not produced"; ls -R build/Build/Products || true; exit 1; }
+          /usr/bin/codesign --verify --deep --strict --verbose=2 "$APP"
+          /usr/bin/defaults read "$PWD/$APP/Contents/Info.plist" CFBundleIdentifier
+          /usr/bin/defaults read "$PWD/$APP/Contents/Info.plist" CFBundleShortVersionString
+
+      # ditto, not `zip`: it is the only archiver that preserves the bundle's symlinks and
+      # extended attributes, and a zip that loses them produces an app with a broken signature.
+      - name: Package
+        run: ditto -c -k --sequesterRsrc --keepParent "build/Build/Products/Release/missbar.app" missbar.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: missbar
+          path: missbar.zip
+          if-no-files-found: error
+
+      - name: Attach to release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${GITHUB_REF_NAME}" missbar.zip --generate-notes || gh release upload "${GITHUB_REF_NAME}" missbar.zip --clobber

@@ -160,7 +160,7 @@ static void Pump(NSTimeInterval seconds) {
         styleMask:NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable
         backing:NSBackingStoreBuffered defer:NO];
     self.window.releasedWhenClosed = NO;
-    self.window.title = @"Ice 2 — macOS 27 Prototype";
+    self.window.title = @"missbar — macOS 27 Prototype";
     NSTextField *intro = [NSTextField wrappingLabelWithString:
         @"Choose an app to test native menu bar hiding. Start with the disposable I27 icon.\nFocus and some system extras may also hide temporarily. Quitting restores the bar."];
     intro.frame = NSMakeRect(20, 153, 530, 67);
@@ -226,7 +226,7 @@ int main(int argc, const char *argv[]) {
         printf("Native hiding selectors available: %s\n", available ? "yes" : "no");
         Report(@"discovery", Snapshot());
         NSString *bundle = NSBundle.mainBundle.bundleIdentifier;
-        if (!selfTest && available && [bundle isEqual:@"com.dragonapp.ice.macos27-prototype"]) {
+        if (!selfTest && available && [bundle isEqual:@"com.nexuskfk.missbar.macos27-prototype"]) {
             [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
             PrototypeController *controller = [PrototypeController new];
             NSApp.delegate = controller;
@@ -234,7 +234,7 @@ int main(int argc, const char *argv[]) {
             return 0;
         }
         if (!selfTest) return available && AXIsProcessTrusted() ? 0 : 2;
-        if (!available || !AXIsProcessTrusted() || ![bundle isEqual:@"com.dragonapp.ice.macos27-prototype"]) {
+        if (!available || !AXIsProcessTrusted() || ![bundle isEqual:@"com.nexuskfk.missbar.macos27-prototype"]) {
             fprintf(stderr, "Self-test needs the prototype app bundle, native selectors and Accessibility permission.\n");
             return 2;
         }
@@ -242,7 +242,7 @@ int main(int argc, const char *argv[]) {
         // Hide only our disposable item. Do not move icons or write preferences.
         NSStatusItem *statusItem = [NSStatusBar.systemStatusBar statusItemWithLength:NSVariableStatusItemLength];
         statusItem.button.title = @"I27";
-        statusItem.button.accessibilityLabel = @"Ice 2 macOS 27 probe";
+        statusItem.button.accessibilityLabel = @"missbar macOS 27 probe";
         Pump(2);
         NSArray *before = Snapshot();
         Report(@"before", before);

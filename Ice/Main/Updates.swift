@@ -13,7 +13,7 @@ import UserNotifications
 ///
 /// Sparkle itself lives in DragonKit's ``DragonUpdater`` (module `DragonKitUpdates`), which
 /// every Dragon app shares — same feed handling, same settings, and the same reworded
-/// "Ice 2 is up to date" alert. Ice 2 keeps only the app-specific parts here: bringing the
+/// "missbar is up to date" alert. missbar keeps only the app-specific parts here: bringing the
 /// app forward so Sparkle's dialogs appear in front, the debug-build guard, and its own
 /// notification for an update a background check found.
 @MainActor
@@ -23,7 +23,7 @@ final class UpdatesManager {
 
     /// The underlying updater. The Updates settings pane observes this directly.
     ///
-    /// Both settings are behaviour Ice 2 had when it wired Sparkle itself and lost when it
+    /// Both settings are behaviour missbar had when it wired Sparkle itself and lost when it
     /// moved onto the kit, because ``DragonUpdater`` passed no user-driver delegate at all.
     let updater = DragonUpdater(config: DragonUpdaterConfig(
         // A scheduled check shows Sparkle's window without stealing focus, rather than a modal
@@ -36,7 +36,7 @@ final class UpdatesManager {
     ///
     /// Primarily the build channel `scripts/run-debug.sh` stamps into `Info.plist`, read through
     /// DragonKit 3.3.0's ``DragonAbout/isDebugBuild(bundle:)``: `MAC-APP-RELEASE-LIFECYCLE.md`
-    /// scopes the rule to the *bundle* someone is running hands-on beside their installed Ice 2,
+    /// scopes the rule to the *bundle* someone is running hands-on beside their installed missbar,
     /// and the channel is the only thing that describes that bundle.
     ///
     /// `#if DEBUG` is kept alongside it rather than replaced by it. A build launched straight
@@ -110,12 +110,12 @@ final class UpdatesManager {
         }
     }
 
-    /// Posts Ice 2's "A new update is available" notification.
+    /// Posts missbar's "A new update is available" notification.
     ///
     /// Only ever called for a check the user did not start — ``DragonUpdaterConfig`` filters out
     /// user-initiated ones, since someone who just clicked **Check for Updates…** is already
     /// looking at the result. Because gentle reminders are on, Sparkle shows its update window
-    /// *without* activating Ice 2, so on a busy desktop that window can sit unnoticed behind
+    /// *without* activating missbar, so on a busy desktop that window can sit unnoticed behind
     /// other apps; this is the nudge.
     ///
     /// Deliberately just the one notification, not the `UserNotificationManager` subsystem this

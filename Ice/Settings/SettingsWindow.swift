@@ -17,7 +17,7 @@ struct SettingsWindow: Scene {
         IceWindow(id: .settings) {
             SettingsView(navigationState: appState.navigationState)
                 // Rebuilds the whole window when `LanguagePicker` changes language, so every
-                // `L(_:)` in Ice 2's panes and in DragonKit's re-resolves without a relaunch.
+                // `L(_:)` in missbar's panes and in DragonKit's re-resolves without a relaunch.
                 .dragonLocalized()
                 .onWindowChange { window in
                     model.observeWindowToolbar(window)

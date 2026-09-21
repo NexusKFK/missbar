@@ -8,15 +8,15 @@ fi
 
 repo_dir="$(cd "$(dirname "$0")/.." && pwd)"
 prototype_dir="$(mktemp -d /tmp/ice2-macos27-prototype.XXXXXX)"
-prototype_app="$prototype_dir/Ice 2 macOS 27 Prototype.app"
+prototype_app="$prototype_dir/missbar macOS 27 Prototype.app"
 mkdir -p "$prototype_app/Contents/MacOS"
 cat > "$prototype_app/Contents/Info.plist" <<'PLIST'
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
-<key>CFBundleIdentifier</key><string>com.dragonapp.ice.macos27-prototype</string>
+<key>CFBundleIdentifier</key><string>com.nexuskfk.missbar.macos27-prototype</string>
 <key>CFBundleExecutable</key><string>macos27-prototype</string>
-<key>CFBundleName</key><string>Ice 2 macOS 27 Prototype</string>
+<key>CFBundleName</key><string>missbar macOS 27 Prototype</string>
 <key>CFBundlePackageType</key><string>APPL</string>
 <key>LSUIElement</key><true/>
 </dict></plist>

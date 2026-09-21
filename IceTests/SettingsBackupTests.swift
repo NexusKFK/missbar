@@ -131,7 +131,7 @@ struct SettingsBackupTests {
         // exact value from an absolute Date.
         let name = SettingsBackup.fileName(for: Date(timeIntervalSince1970: 0))
         let matched = name.range(
-            of: #"^Ice-Settings-\d{4}-\d{2}-\d{2}-\d{6}\.icebackup$"#,
+            of: #"^missbar-Settings-\d{4}-\d{2}-\d{2}-\d{6}\.icebackup$"#,
             options: .regularExpression
         )
         #expect(matched != nil)
@@ -144,13 +144,13 @@ struct SettingsBackupTests {
         defer { try? FileManager.default.removeItem(at: folder) }
 
         for stamp in ["2026-01-01-000000", "2026-01-02-000000", "2026-01-03-000000"] {
-            try Data("x".utf8).write(to: folder.appending(path: "Ice-Settings-\(stamp).icebackup"))
+            try Data("x".utf8).write(to: folder.appending(path: "missbar-Settings-\(stamp).icebackup"))
         }
         try Data("y".utf8).write(to: folder.appending(path: "notes.txt")) // must be ignored
 
         let list = SettingsBackup.listBackups(in: folder)
         #expect(list.count == 3)
-        #expect(list.first?.lastPathComponent == "Ice-Settings-2026-01-03-000000.icebackup")
+        #expect(list.first?.lastPathComponent == "missbar-Settings-2026-01-03-000000.icebackup")
     }
 
     @Test func pruneKeepsNewest() throws {
@@ -160,13 +160,13 @@ struct SettingsBackupTests {
         defer { try? FileManager.default.removeItem(at: folder) }
 
         for stamp in ["2026-01-01-000000", "2026-01-02-000000", "2026-01-03-000000"] {
-            try Data("x".utf8).write(to: folder.appending(path: "Ice-Settings-\(stamp).icebackup"))
+            try Data("x".utf8).write(to: folder.appending(path: "missbar-Settings-\(stamp).icebackup"))
         }
         SettingsBackup.prune(in: folder, keeping: 1)
 
         let remaining = SettingsBackup.listBackups(in: folder)
         #expect(remaining.count == 1)
-        #expect(remaining.first?.lastPathComponent == "Ice-Settings-2026-01-03-000000.icebackup")
+        #expect(remaining.first?.lastPathComponent == "missbar-Settings-2026-01-03-000000.icebackup")
     }
 
     // MARK: - writeBackup / restore (file round-trip)
@@ -205,7 +205,7 @@ struct SettingsBackupTests {
             ScratchDefaults.destroy(tSuite)
             try? FileManager.default.removeItem(at: folder)
         }
-        let url = folder.appending(path: "Ice-Settings-2026-01-01-000000.icebackup")
+        let url = folder.appending(path: "missbar-Settings-2026-01-01-000000.icebackup")
         try Data("not a plist".utf8).write(to: url)
         #expect(throws: (any Error).self) {
             try SettingsBackup.restore(from: url, into: target)
@@ -226,7 +226,7 @@ struct SettingsBackupTests {
 
         // Pre-seed two older backups so keeping:1 trims after the fresh write.
         for stamp in ["2020-01-01-000000", "2020-01-02-000000"] {
-            try Data("x".utf8).write(to: folder.appending(path: "Ice-Settings-\(stamp).icebackup"))
+            try Data("x".utf8).write(to: folder.appending(path: "missbar-Settings-\(stamp).icebackup"))
         }
         // A far-future date makes the new file sort newest.
         let url = try SettingsBackup.performBackup(
@@ -242,8 +242,8 @@ struct SettingsBackupTests {
 
     @Test func defaultFolderIsDocumentsIceBackups() {
         let home = URL(fileURLWithPath: "/Users/test", isDirectory: true)
-        let folder = SettingsBackup.defaultFolder(home: home, bundleID: "com.dragonapp.ice")
-        #expect(folder.path == "/Users/test/Documents/Ice Backups")
+        let folder = SettingsBackup.defaultFolder(home: home, bundleID: "com.nexuskfk.missbar")
+        #expect(folder.path == "/Users/test/Documents/missbar Backups")
     }
 
     /// Only the installed release gets the plain folder. Both builds used to share it, and
@@ -252,9 +252,9 @@ struct SettingsBackupTests {
     /// Debug folder too, away from the release user's documents.
     @Test func defaultFolderIsNamespacedForAnythingButTheRelease() {
         let home = URL(fileURLWithPath: "/Users/test", isDirectory: true)
-        for id in ["com.dragonapp.ice.debug", nil] {
+        for id in ["com.nexuskfk.missbar.debug", nil] {
             let folder = SettingsBackup.defaultFolder(home: home, bundleID: id)
-            #expect(folder.path == "/Users/test/Documents/Ice Backups (Debug)")
+            #expect(folder.path == "/Users/test/Documents/missbar Backups (Debug)")
         }
     }
 

@@ -535,16 +535,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = K2ATHQPJDP;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dragonapp.ice.IceTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nexuskfk.missbar.IceTests;
 				PRODUCT_NAME = IceTests;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ice 2.app/Contents/MacOS/Ice 2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/missbar.app/Contents/MacOS/missbar";
 			};
 			name = Release;
 		};
@@ -557,12 +557,12 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dragonapp.ice.IceTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nexuskfk.missbar.IceTests;
 				PRODUCT_NAME = IceTests;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ice 2 Debug.app/Contents/MacOS/Ice 2 Debug";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/missbar Debug.app/Contents/MacOS/missbar Debug";
 			};
 			name = Debug;
 		};
@@ -623,7 +623,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 Teddy Chan";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2024 Jordan Baird · © 2026 Teddy Chan · © 2026 missbar contributors. GPL-3.0.";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -672,7 +672,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = K2ATHQPJDP;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -684,7 +684,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 Teddy Chan";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2024 Jordan Baird · © 2026 Teddy Chan · © 2026 missbar contributors. GPL-3.0.";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -715,8 +715,8 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = App/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Ice 2 Debug";
-				INFOPLIST_KEY_CFBundleName = "Ice 2 Debug";
+				INFOPLIST_KEY_CFBundleDisplayName = "missbar Debug";
+				INFOPLIST_KEY_CFBundleName = "missbar Debug";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -724,10 +724,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 2.16.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dragonapp.ice.debug;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nexuskfk.missbar.debug;
 				SWIFT_OBJC_BRIDGING_HEADER = Ice/MenuBar/Native/NativeMenuBarBridge.h;
 				PRODUCT_MODULE_NAME = Ice_2;
-				PRODUCT_NAME = "Ice 2 Debug";
+				PRODUCT_NAME = "missbar Debug";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -739,8 +739,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1346;
 				DEAD_CODE_STRIPPING = YES;
@@ -752,8 +752,8 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = App/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Ice 2";
-				INFOPLIST_KEY_CFBundleName = "Ice 2";
+				INFOPLIST_KEY_CFBundleDisplayName = "missbar";
+				INFOPLIST_KEY_CFBundleName = "missbar";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -761,9 +761,9 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 2.16.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dragonapp.ice;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nexuskfk.missbar;
 				SWIFT_OBJC_BRIDGING_HEADER = Ice/MenuBar/Native/NativeMenuBarBridge.h;
-				PRODUCT_NAME = "Ice 2";
+				PRODUCT_NAME = "missbar";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -784,7 +784,7 @@
 				INFOPLIST_FILE = App/MenuBarItemService/Info.plist;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dragonapp.ice.debug.MenuBarItemService;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nexuskfk.missbar.debug.MenuBarItemService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
@@ -800,7 +800,7 @@
 		7188A68F2E27F9ED008F131D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_APP_SANDBOX = NO;
@@ -810,7 +810,7 @@
 				INFOPLIST_FILE = App/MenuBarItemService/Info.plist;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dragonapp.ice.MenuBarItemService;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nexuskfk.missbar.MenuBarItemService;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;

@@ -1,4 +1,4 @@
-/* Ice 2 — es
+/* missbar — es
    App-owned UI strings, resolved through DragonKit's L(_:) so the app follows the
    language chosen in Settings ▸ General without a relaunch.
 
@@ -17,22 +17,22 @@
 "app.advanced.dividerStyle.chevron" = "Galón";
 "app.advanced.enableAlwaysHidden" = "Activar la sección siempre oculta";
 "app.advanced.hideAppMenus" = "Ocultar los menús de la app al mostrar elementos de la barra de menús";
-"app.advanced.hideAppMenus.note" = "Libera espacio en la barra de menús ocultando los menús de la app actual cuando haga falta. macOS obliga a Ice 2 a mostrarse en el Dock mientras este ajuste está activo.";
-"app.advanced.secondaryContextMenu" = "Activar los menús contextuales de Ice 2 al hacer clic derecho";
-"app.advanced.secondaryContextMenu.note" = "Haz clic derecho en los elementos de control de Ice 2 o en una zona vacía de la barra de menús para mostrar su menú. Desactiva este ajuste si hay conflictos con otras utilidades de la barra de menús. Cuando está desactivado, Opción-Comando-clic en la barra de menús abre los ajustes de Ice 2.";
+"app.advanced.hideAppMenus.note" = "Libera espacio en la barra de menús ocultando los menús de la app actual cuando haga falta. macOS obliga a missbar a mostrarse en el Dock mientras este ajuste está activo.";
+"app.advanced.secondaryContextMenu" = "Activar los menús contextuales de missbar al hacer clic derecho";
+"app.advanced.secondaryContextMenu.note" = "Haz clic derecho en los elementos de control de missbar o en una zona vacía de la barra de menús para mostrar su menú. Desactiva este ajuste si hay conflictos con otras utilidades de la barra de menús. Cuando está desactivado, Opción-Comando-clic en la barra de menús abre los ajustes de missbar.";
 "app.advanced.section.menuBarSections" = "Secciones de la barra de menús";
 "app.advanced.section.other" = "Otros";
 "app.advanced.section.triggers" = "Activadores";
 "app.advanced.showAllOnDrag" = "Mostrar todas las secciones al arrastrar elementos con ⌘ Comando";
 "app.advanced.showForFocusedApp" = "Mostrar elementos para la app activa";
-"app.advanced.showForFocusedApp.note" = "Cuando la app pasa a estar activa, Ice muestra la sección oculta.";
+"app.advanced.showForFocusedApp.note" = "Cuando la app pasa a estar activa, missbar muestra la sección oculta.";
 "app.advanced.tempShowInterval" = "Retardo de los elementos mostrados temporalmente";
 "app.advanced.tempShowInterval.note" = "El tiempo de espera antes de ocultar los elementos mostrados temporalmente.";
 "app.advanced.trigger.hiddenSection" = "Sección oculta";
 "app.appearance.border" = "Borde";
 "app.appearance.borderColor" = "Color del borde";
 "app.appearance.borderWidth" = "Grosor del borde";
-"app.appearance.cannotEdit" = "Ice 2 no puede editar la apariencia de las barras de menús ocultas automáticamente.";
+"app.appearance.cannotEdit" = "missbar no puede editar la apariencia de las barras de menús ocultas automáticamente.";
 "app.appearance.cap.leading" = "Extremo inicial";
 "app.appearance.cap.round" = "Extremo redondeado";
 "app.appearance.cap.square" = "Extremo cuadrado";
@@ -42,7 +42,7 @@
 "app.appearance.customIconDynamic.note" = "Muestra el icono como una imagen monocroma que se adapta dinámicamente a la apariencia de la barra de menús. Este ajuste elimina todo el color del icono, pero garantiza una representación uniforme sobre fondos claros y oscuros.";
 "app.appearance.dark" = "Apariencia oscura";
 "app.appearance.holdToPreview" = "Mantener para previsualizar";
-"app.appearance.iceIcon" = "Icono de Ice 2";
+"app.appearance.iceIcon" = "Icono de missbar";
 "app.appearance.iceIcon.note" = "Elige un icono personalizado para mostrar en la barra de menús.";
 "app.appearance.insetShape" = "Usar forma con margen en pantallas con muesca";
 "app.appearance.light" = "Apariencia clara";
@@ -71,7 +71,7 @@
 "app.backup.location.note" = "Elige una carpeta dentro de Dropbox, iCloud Drive o Google Drive para sincronizar tus ajustes entre tus Mac. También se conservan copias de seguridad para restaurar tras una reinstalación o en un Mac nuevo.";
 "app.backup.manual" = "Copia de seguridad manual";
 "app.backup.restoreAndRelaunch" = "Restaurar y reiniciar";
-"app.backup.restoreConfirmMessage" = "Esto sustituye todos los ajustes actuales de Ice 2 por la copia de seguridad del %@ y después reinicia Ice 2.";
+"app.backup.restoreConfirmMessage" = "Esto sustituye todos los ajustes actuales de missbar por la copia de seguridad del %@ y después reinicia missbar.";
 "app.backup.restoreConfirmTitle" = "¿Restaurar los ajustes?";
 "app.backup.retention.note" = "Se conservan las %d copias más recientes; las anteriores se eliminan automáticamente.";
 "app.backup.status.justNow" = "Copia de seguridad hecha ahora mismo.";
@@ -82,7 +82,7 @@
 "app.common.done" = "Listo";
 "app.common.loadingItems" = "Cargando elementos de la barra de menús…";
 "app.common.none" = "Ninguno";
-"app.common.relaunch" = "Reiniciar Ice 2";
+"app.common.relaunch" = "Reiniciar missbar";
 "app.common.reset" = "Restablecer";
 "app.common.second" = "%@ segundo";
 "app.common.seconds" = "%@ segundos";
@@ -90,13 +90,13 @@
 "app.general.apply" = "Aplicar";
 "app.general.apply.help" = "Aplicar el espaciado actual";
 "app.general.autoEnable.notch" = "Muesca de pantalla";
-"app.general.autoEnable.notch.note" = "Activa la barra de Ice 2 cuando la pantalla con la barra de menús activa tiene muesca.";
+"app.general.autoEnable.notch.note" = "Activa la barra de missbar cuando la pantalla con la barra de menús activa tiene muesca.";
 "app.general.autoEnable.screenWidth" = "Ancho de pantalla";
-"app.general.autoEnable.screenWidth.note" = "Activa la barra de Ice 2 cuando la pantalla con la barra de menús activa es más estrecha que el umbral.";
-"app.general.autoEnableIceBar" = "Activar la barra de Ice 2 automáticamente";
-"app.general.autoEnableIceBar.note" = "Activa o desactiva la barra de Ice 2 automáticamente según la pantalla actual.";
+"app.general.autoEnable.screenWidth.note" = "Activa la barra de missbar cuando la pantalla con la barra de menús activa es más estrecha que el umbral.";
+"app.general.autoEnableIceBar" = "Activar la barra de missbar automáticamente";
+"app.general.autoEnableIceBar.note" = "Activa o desactiva la barra de missbar automáticamente según la pantalla actual.";
 "app.general.autoEnableWhen" = "Activar automáticamente cuando";
-"app.general.autoIceBar" = "Barra de Ice 2 automática";
+"app.general.autoIceBar" = "Barra de missbar automática";
 "app.general.autoRehide" = "Volver a ocultar automáticamente";
 "app.general.hoverDelay.note" = "El tiempo de espera antes de mostrar los elementos ocultos.";
 "app.general.itemSpacing" = "Espaciado de los elementos de la barra de menús";
@@ -105,21 +105,21 @@
 "app.general.launchAtLogin" = "Abrir al iniciar sesión";
 "app.general.location" = "Ubicación";
 "app.general.location.dynamic" = "Dinámica";
-"app.general.location.dynamic.note" = "La ubicación de la barra de Ice 2 cambia según el contexto.";
-"app.general.location.iceIcon" = "Icono de Ice 2";
-"app.general.location.iceIcon.note" = "La barra de Ice 2 se centra bajo el icono de Ice 2.";
+"app.general.location.dynamic.note" = "La ubicación de la barra de missbar cambia según el contexto.";
+"app.general.location.iceIcon" = "Icono de missbar";
+"app.general.location.iceIcon.note" = "La barra de missbar se centra bajo el icono de missbar.";
 "app.general.location.mousePointer" = "Puntero del ratón";
-"app.general.location.mousePointer.note" = "La barra de Ice 2 se centra bajo el puntero del ratón.";
+"app.general.location.mousePointer.note" = "La barra de missbar se centra bajo el puntero del ratón.";
 "app.general.resetSpacing.help" = "Restablecer el espaciado por omisión";
-"app.general.section.iceBar" = "Barra de Ice 2";
+"app.general.section.iceBar" = "Barra de missbar";
 "app.general.section.rehide" = "Volver a ocultar";
 "app.general.section.showHiddenItems" = "Mostrar elementos ocultos";
-"app.general.showIceIcon" = "Mostrar el icono de Ice 2";
-"app.general.showIceIcon.note" = "Haz clic para mostrar los elementos ocultos de la barra de menús. Haz clic con el botón derecho para abrir los ajustes de Ice 2. Personaliza el icono en los ajustes de Apariencia.";
+"app.general.showIceIcon" = "Mostrar el icono de missbar";
+"app.general.showIceIcon.note" = "Haz clic para mostrar los elementos ocultos de la barra de menús. Haz clic con el botón derecho para abrir los ajustes de missbar. Personaliza el icono en los ajustes de Apariencia.";
 "app.general.showOnClick" = "Mostrar al hacer clic";
 "app.general.showOnClick.note" = "Haz clic en una zona vacía de la barra de menús para mostrar los elementos ocultos.";
 "app.general.showOnHover" = "Mostrar al pasar el cursor";
-"app.general.showOnHover.note" = "Pasa el cursor por una zona vacía de la barra de menús o por el icono de Ice 2 para mostrar los elementos ocultos.";
+"app.general.showOnHover.note" = "Pasa el cursor por una zona vacía de la barra de menús o por el icono de missbar para mostrar los elementos ocultos.";
 "app.general.showOnScroll" = "Mostrar al desplazar";
 "app.general.showOnScroll.note" = "Desplázate o desliza en la barra de menús para mostrar los elementos ocultos.";
 "app.general.spacing.default" = "por omisión";
@@ -132,13 +132,13 @@
 "app.general.strategy.smart.note" = "Los elementos de la barra de menús se vuelven a ocultar con un algoritmo inteligente.";
 "app.general.strategy.timed" = "Temporizada";
 "app.general.strategy.timed.note" = "Los elementos de la barra de menús se vuelven a ocultar tras un tiempo fijo.";
-"app.general.useIceBar" = "Usar la barra de Ice 2";
+"app.general.useIceBar" = "Usar la barra de missbar";
 "app.general.useIceBar.note" = "Muestra los elementos ocultos de la barra de menús en una barra aparte, debajo de la barra de menús.";
 "app.general.width" = "Ancho";
 "app.general.widthThreshold" = "Umbral de ancho";
-"app.general.widthThreshold.note" = "La barra de Ice 2 se activará cuando la pantalla con la barra de menús activa sea más estrecha que este ancho en puntos.";
+"app.general.widthThreshold.note" = "La barra de missbar se activará cuando la pantalla con la barra de menús activa sea más estrecha que este ancho en puntos.";
 "app.hotkeys.clear" = "Borrar";
-"app.hotkeys.enableIceBar" = "Activar la barra de Ice 2";
+"app.hotkeys.enableIceBar" = "Activar la barra de missbar";
 "app.hotkeys.error" = "ERROR";
 "app.hotkeys.record" = "Grabar";
 "app.hotkeys.recordHotkey" = "Grabar atajo";
@@ -152,9 +152,9 @@
 "app.hotkeys.toggleDividerIcons" = "Alternar los iconos separadores de secciones";
 "app.hotkeys.toggleHidden" = "Alternar la sección oculta";
 "app.hotkeys.typeHotkey" = "Escribe el atajo";
-"app.icebar.cannotDisplay" = "Ice 2 no puede mostrar elementos de barras de menús ocultas automáticamente";
-"app.icebar.needsScreenRecording" = "La barra de Ice 2 requiere permiso de grabación de pantalla.";
-"app.icebar.openSettings" = "Abrir los ajustes de Ice 2";
+"app.icebar.cannotDisplay" = "missbar no puede mostrar elementos de barras de menús ocultas automáticamente";
+"app.icebar.needsScreenRecording" = "La barra de missbar requiere permiso de grabación de pantalla.";
+"app.icebar.openSettings" = "Abrir los ajustes de missbar";
 "app.icon.arrow" = "Flecha";
 "app.icon.chevron" = "Galón";
 "app.icon.custom" = "Personalizado";
@@ -168,18 +168,18 @@
 "app.layout.alert.notMovable.message" = "macOS impide mover \"%@\".";
 "app.layout.alert.notMovable.title" = "El elemento de la barra de menús no se puede mover.";
 "app.layout.alert.unresponsive.message" = "%@ no responde. No se podrá mover hasta que se reinicie. El movimiento de otros elementos de la barra de menús también puede verse afectado hasta que se resuelva.";
-"app.layout.cannotArrange" = "Ice 2 no puede organizar elementos en barras de menús ocultas automáticamente.";
+"app.layout.cannotArrange" = "missbar no puede organizar elementos en barras de menús ocultas automáticamente.";
 "app.layout.goToAdvanced" = "Ir a los ajustes avanzados";
 "app.layout.header.subtitle" = "También puedes organizarlos arrastrándolos con ⌘ Comando en la barra de menús.";
 "app.layout.header.title" = "Arrastra para organizar los elementos de la barra de menús en distintas secciones.";
 "app.layout.needsScreenRecording" = "La disposición de la barra de menús requiere permiso de grabación de pantalla.";
-"app.layout.needsScreenRecording.note" = "En macOS 26, puede que Ice 2 deba reiniciarse después de conceder este permiso.";
+"app.layout.needsScreenRecording.note" = "En macOS 26, puede que missbar deba reiniciarse después de conceder este permiso.";
 "app.layout.noItems" = "No se han encontrado elementos gestionables en la barra de menús.";
 "app.layout.noProfiles" = "No hay perfiles de disposición guardados.";
 "app.layout.points" = "%d pt";
 "app.layout.profileName" = "Nombre del perfil";
 "app.layout.profileSummary" = "%1$d visibles, %2$d ocultos, %3$d siempre ocultos";
-"app.layout.restoreIceIcon" = "Restaurar el icono de Ice 2";
+"app.layout.restoreIceIcon" = "Restaurar el icono de missbar";
 "app.layout.saveCurrent" = "Guardar la disposición actual";
 "app.layout.section.profiles" = "Perfiles";
 "app.layout.section.spacers" = "Espaciadores";
@@ -203,12 +203,12 @@
 "app.permissions.continueLimited" = "Continuar en modo limitado";
 "app.permissions.grant" = "Conceder permiso";
 "app.permissions.granted" = "Permiso concedido";
-"app.permissions.intro" = "Ice 2 necesita tu permiso para gestionar la barra de menús.";
-"app.permissions.limitedMode.callout" = "Ice 2 puede funcionar en modo limitado sin este permiso.";
-"app.permissions.needsThisTo" = "Ice 2 lo necesita para:";
+"app.permissions.intro" = "missbar necesita tu permiso para gestionar la barra de menús.";
+"app.permissions.limitedMode.callout" = "missbar puede funcionar en modo limitado sin este permiso.";
+"app.permissions.needsThisTo" = "missbar lo necesita para:";
 "app.permissions.privacy" = "No se recopila ni almacena absolutamente ninguna información personal.";
 "app.permissions.quit" = "Salir";
-"app.permissions.relaunchNote" = "Después de conceder este permiso en Ajustes del Sistema, reinicia Ice 2 para activar la captura en macOS 26.";
+"app.permissions.relaunchNote" = "Después de conceder este permiso en Ajustes del Sistema, reinicia missbar para activar la captura en macOS 26.";
 "app.search.clickItem" = "Hacer clic en el elemento";
 "app.search.prompt.clickOrShow" = "Buscar elementos de la barra de menús…";
 "app.search.prompt.temporarilyShow" = "Mostrar temporalmente un elemento de la barra de menús…";
@@ -222,29 +222,29 @@
 "app.uninstall.item.state" = "Estado guardado de la aplicación";
 "app.updates.notification.body" = "%@ ha encontrado una versión más reciente.";
 "app.updates.notification.title" = "Hay una nueva actualización disponible";
-"app.whatsNew.added1" = "Ocultar vuelve a funcionar en macOS 27. macOS 27 cambió cómo se construye la barra de menús y el método anterior de Ice 2 ya no podía ver los iconos individuales, así que no se ocultaba nada y Disposición se quedaba vacía. Ahora Ice 2 encuentra las apps de la barra de menús mediante Accesibilidad y le pide a macOS que las oculte él mismo. El icono de Ice, tus secciones Oculta y Siempre oculta, tus atajos de teclado y el reocultamiento automático funcionan como antes. Concede a Ice 2 el permiso de Accesibilidad si aún no lo has hecho.";
+"app.whatsNew.added1" = "Ocultar vuelve a funcionar en macOS 27. macOS 27 cambió cómo se construye la barra de menús y el método anterior de missbar ya no podía ver los iconos individuales, así que no se ocultaba nada y Disposición se quedaba vacía. Ahora missbar encuentra las apps de la barra de menús mediante Accesibilidad y le pide a macOS que las oculte él mismo. El icono de missbar, tus secciones Oculta y Siempre oculta, tus atajos de teclado y el reocultamiento automático funcionan como antes. Concede a missbar el permiso de Accesibilidad si aún no lo has hecho.";
 "app.whatsNew.added2" = "Un editor de Disposición hecho para macOS 27. Arrastra una app a Visible, Oculta o Siempre oculta, o elige una sección en el menú de su tarjeta; los cambios se guardan sobre la marcha. Una tarjeta cubre todos los iconos de una misma app, porque macOS 27 los muestra y los oculta juntos. Tus perfiles de disposición guardados siguen sirviendo: al aplicar uno, sus elementos se reparten por secciones y se te indica qué no se pudo emparejar. Asignar una sección no cambia el orden de los iconos: para eso, arrástralos con Comando en la barra de menús, como siempre.";
-"app.whatsNew.changed1" = "Tres cosas no están disponibles en macOS 27: la barra Ice independiente, buscar un icono concreto de la barra de menús y mostrar un icono temporalmente. Los elementos ocultos ahora aparecen directamente en la barra de menús, no en una barra aparte. Esos controles y atajos quedan desactivados ahí, y los ajustes que guardaste se conservan, así que vuelven en macOS 26. Ocultar también puede llevarse consigo Concentración y algunos otros extras del sistema, y la visibilidad de las secciones se aplica a todas las pantallas a la vez.";
-"app.whatsNew.fixed1" = "La barra Ice ya no se queda para siempre en Cargando elementos de la barra de menús… cuando no hay nada que cargar. Ahora indica que no se encontraron elementos y ofrece un botón Comprobar de nuevo.";
-"app.whatsNew.summary" = "Ice 2 vuelve a ocultar elementos de la barra de menús en macOS 27. macOS 27 reconstruyó la barra de menús de una forma que el método anterior ya no podía seguir, así que esta versión añade un motor hecho para ella y un nuevo editor de Disposición con arrastrar y soltar. En macOS 26 y anteriores no cambia nada.";
+"app.whatsNew.changed1" = "Tres cosas no están disponibles en macOS 27: la barra missbar independiente, buscar un icono concreto de la barra de menús y mostrar un icono temporalmente. Los elementos ocultos ahora aparecen directamente en la barra de menús, no en una barra aparte. Esos controles y atajos quedan desactivados ahí, y los ajustes que guardaste se conservan, así que vuelven en macOS 26. Ocultar también puede llevarse consigo Concentración y algunos otros extras del sistema, y la visibilidad de las secciones se aplica a todas las pantallas a la vez.";
+"app.whatsNew.fixed1" = "La barra missbar ya no se queda para siempre en Cargando elementos de la barra de menús… cuando no hay nada que cargar. Ahora indica que no se encontraron elementos y ofrece un botón Comprobar de nuevo.";
+"app.whatsNew.summary" = "missbar vuelve a ocultar elementos de la barra de menús en macOS 27. macOS 27 reconstruyó la barra de menús de una forma que el método anterior ya no podía seguir, así que esta versión añade un motor hecho para ella y un nuevo editor de Disposición con arrastrar y soltar. En macOS 26 y anteriores no cambia nada.";
 
 /* macOS 27 native menu bar — English fallback. */
 "app.native.title" = "Menu bar sections on macOS 27";
-"app.native.explanation" = "Choose a section for each app. All menu bar icons from the same app share a section. Use the Ice icon or your hotkeys to show and hide sections.";
+"app.native.explanation" = "Choose a section for each app. All menu bar icons from the same app share a section. Use the missbar icon or your hotkeys to show and hide sections.";
 "app.native.limitations" = "Focus and some system extras may also disappear while items are hidden. Section visibility applies across displays. Use Command-drag in the menu bar to change icon order; profiles save section membership on macOS 27.";
-"app.native.inlineReveal" = "On macOS 27, hidden items appear directly in the menu bar. The separate Ice Bar is unavailable.";
+"app.native.inlineReveal" = "On macOS 27, hidden items appear directly in the menu bar. The separate missbar Bar is unavailable.";
 "app.native.assignments" = "Apps and system items";
 "app.native.systemManaged" = "Managed by macOS";
 "app.native.showAll" = "Show All";
 "app.native.showHidden" = "Show Hidden";
 "app.native.hide" = "Hide Sections";
 "app.native.unavailable" = "Native menu bar hiding is unavailable on this macOS build. All sections have been restored.";
-"app.native.needsAccessibility" = "Enable Accessibility permission for Ice 2, then check again.";
+"app.native.needsAccessibility" = "Enable Accessibility permission for missbar, then check again.";
 "app.native.timeout" = "macOS did not confirm hiding. All sections have been restored; try again.";
 "app.native.invalidSavedLayout" = "The saved macOS 27 layout could not be read. Items remain visible until you assign sections again.";
 "app.native.noProfileMatches" = "This profile contains no items that can be mapped to macOS 27. Your current section assignments have not changed.";
 "app.native.profileResult" = "Profile applied. %ld app(s) appeared in multiple sections and were kept in the more visible section. %ld item(s) could not be mapped; their saved profile entries are unchanged.";
-"app.native.unavailableActions" = "Per-icon search, temporary reveal, and the separate Ice Bar are unavailable on macOS 27. Use section toggles or Layout instead.";
+"app.native.unavailableActions" = "Per-icon search, temporary reveal, and the separate missbar Bar are unavailable on macOS 27. Use section toggles or Layout instead.";
 
 // Native section editor
 "app.native.editor.title" = "Organize your menu bar";
@@ -252,7 +252,7 @@
 "app.native.editor.grouping" = "All menu bar icons from an app move together. This does not change their order in the menu bar.";
 "app.native.editor.refresh" = "Refresh Apps";
 "app.native.editor.visible" = "Always shown.";
-"app.native.editor.hidden" = "Revealed through the normal Ice toggle.";
+"app.native.editor.hidden" = "Revealed through the normal missbar toggle.";
 "app.native.editor.alwaysHidden" = "Revealed only when explicitly requested.";
 "app.native.editor.dropHere" = "Drop an app here";
 "app.native.editor.moveTo" = "Move to %@";

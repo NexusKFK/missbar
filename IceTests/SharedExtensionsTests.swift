@@ -80,12 +80,12 @@ struct SharedExtensionsTests {
     // MARK: DispatchQueue.targetingGlobal
 
     @Test func targetingGlobalPreservesTheLabel() {
-        let queue = DispatchQueue.targetingGlobal(label: "com.dragonapp.ice.tests.serial")
-        #expect(queue.label == "com.dragonapp.ice.tests.serial")
+        let queue = DispatchQueue.targetingGlobal(label: "com.nexuskfk.missbar.tests.serial")
+        #expect(queue.label == "com.nexuskfk.missbar.tests.serial")
     }
 
     @Test func targetingGlobalQueueExecutesWork() {
-        let queue = DispatchQueue.targetingGlobal(label: "com.dragonapp.ice.tests.exec")
+        let queue = DispatchQueue.targetingGlobal(label: "com.nexuskfk.missbar.tests.exec")
         var value = 0
         queue.sync { value = 42 }
         #expect(value == 42)
@@ -93,11 +93,11 @@ struct SharedExtensionsTests {
 
     @Test func targetingGlobalAcceptsConcurrentAttributesAndQoS() {
         let queue = DispatchQueue.targetingGlobal(
-            label: "com.dragonapp.ice.tests.concurrent",
+            label: "com.nexuskfk.missbar.tests.concurrent",
             qos: .userInitiated,
             attributes: .concurrent
         )
-        #expect(queue.label == "com.dragonapp.ice.tests.concurrent")
+        #expect(queue.label == "com.nexuskfk.missbar.tests.concurrent")
 
         // A concurrent queue still runs every submitted block.
         let group = DispatchGroup()

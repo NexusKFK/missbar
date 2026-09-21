@@ -197,15 +197,15 @@ final class MenuBarItemSpacingManager {
                     logger.debug("applyOffset: skipping pid \(pid, privacy: .public) (self)")
                     continue
                 }
-                // The *other* build of Ice 2, which `.current` doesn't cover: an installed
-                // release (com.dragonapp.ice) and a local debug build (com.dragonapp.ice.debug)
+                // The *other* build of missbar, which `.current` doesn't cover: an installed
+                // release (com.nexuskfk.missbar) and a local debug build (com.nexuskfk.missbar.debug)
                 // are two processes with two status items. A relaunch is a terminate, and
                 // MAC-APP-RELEASE-LIFECYCLE.md requires that changing a setting in the debug
                 // build never terminates the installed release — the two must survive being
                 // run at once. Only ever matches while both are running, so a Mac with one
                 // build installed is unaffected.
                 guard !Constants.isIceBundleID(app.bundleIdentifier) else {
-                    logger.debug("applyOffset: skipping pid \(pid, privacy: .public) (another Ice 2 build)")
+                    logger.debug("applyOffset: skipping pid \(pid, privacy: .public) (another missbar build)")
                     continue
                 }
                 logger.debug("applyOffset: relaunching pid \(pid, privacy: .public) bundle=\(app.bundleIdentifier ?? "<nil>", privacy: .public)")

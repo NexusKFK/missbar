@@ -186,7 +186,7 @@ func append(_ text: String, font: NSFont, spacingBefore: CGFloat = 0, spacingAft
 append("Acknowledgements", font: titleFont, spacingAfter: 10)
 append(
     """
-    Ice 2 uses a number of excellent open source libraries. Their licenses and copyright \
+    missbar uses a number of excellent open source libraries. Their licenses and copyright \
     notices are reproduced in full below.
     """,
     font: introFont,
@@ -194,7 +194,7 @@ append(
 )
 append(
     """
-    Ice 2 itself is released under the GNU General Public License v3.0, inherited from the \
+    missbar itself is released under the GNU General Public License v3.0, inherited from the \
     original Ice by Jordan Baird.
     """,
     font: introFont
@@ -233,7 +233,7 @@ let textRect = mediaBox.insetBy(dx: 72, dy: 72)
 guard
     let consumer = CGDataConsumer(data: pdfData),
     let context = CGContext(consumer: consumer, mediaBox: &mediaBox, [
-        kCGPDFContextTitle: "Ice 2 Acknowledgements" as CFString,
+        kCGPDFContextTitle: "missbar Acknowledgements" as CFString,
         kCGPDFContextCreator: "generate-acknowledgements.swift" as CFString,
     ] as CFDictionary)
 else {

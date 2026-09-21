@@ -19,7 +19,7 @@ enum IceBarLocation: Int, CaseIterable, Identifiable {
 
     var id: Int { rawValue }
 
-    /// The name shown in the Ice 2 Bar location picker.
+    /// The name shown in the missbar Bar location picker.
     @MainActor var localized: String {
         switch self {
         case .dynamic: L("app.general.location.dynamic")

@@ -1,109 +1,118 @@
 <div align="center">
-    <img src="Ice/Resources/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="160" height="160" alt="Ice 2 app icon">
-    <h1>Ice 2</h1>
-    <p><strong>Menu bar management for macOS</strong></p>
+    <img src="Ice/Resources/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="160" height="160" alt="missbar app icon">
+    <h1>missbar</h1>
+    <p><strong>Menu bar management for macOS 26 and 27</strong></p>
 </div>
 
-Ice 2 hides and shows the items in your macOS menu bar. It splits the menu bar into
-visible, hidden, and always-hidden sections that you reveal by click, hover, scroll,
-or hotkey. Beyond hiding items, it customizes the menu bar's appearance, saves layout
-profiles, and searches your items.
+missbar hides and shows the items in your macOS menu bar. It splits the menu bar into
+visible, hidden, and always-hidden sections that you reveal by click, hover, scroll, or
+hotkey. It also customizes the menu bar's appearance, saves layout profiles, and searches
+your items.
 
-## Screenshots
+## Lineage
 
-#### Settings, in any of seven languages
+missbar is a fork of a fork, and both ancestors deserve the credit:
 
-![General settings](Resources/screenshots/settings-general.png)
+| | |
+|---|---|
+| [jordanbaird/Ice](https://github.com/jordanbaird/Ice) | The original. Last code commit June 2025; its `macos-26` branch stopped in September 2025 without a stable release. |
+| [teddychan/ice-2](https://github.com/teddychan/ice-2) | The maintained fork that did the real work of restoring menu bar management on macOS 26 and then macOS 27. |
+| **missbar** (this repo) | A personal rebuild of ice-2 under its own name and bundle identifier, built and installed without an Apple Developer ID. |
 
-#### Show hidden menu bar items below the menu bar
+This fork exists because the last *official* Ice release (0.11.12, October 2024) no longer
+manages anything on macOS 27 — the app launches and every icon stays visible. Essentially all
+of the engineering that fixes that belongs to the two projects above.
 
-![Ice 2 Bar](https://github.com/user-attachments/assets/f1429589-6186-4e1b-8aef-592219d49b9b)
+## What this fork changes
 
-#### Drag-and-drop interface to arrange menu bar items
+Almost nothing about how the app works. The changes are identity and distribution:
 
-![Menu bar layout](Resources/screenshots/settings-layout.png)
+- **Renamed** to missbar, with its own bundle identifier `com.nexuskfk.missbar`, so it can be
+  installed beside Ice or Ice 2 without either one clobbering the other's preferences, control
+  items or saved state.
+- **Unhooked from Ice 2's update feed.** `SUFeedURL` pointed at ice-2's appcast, which would
+  have made missbar download an Ice 2 release and replace itself with it. It now points at an
+  empty appcast in this repo, so "Check for Updates…" simply reports the app is up to date.
+- **Issues no Homebrew cask token.** missbar is not distributed through Homebrew. Inherited
+  unchanged, its uninstaller would have run `brew uninstall --cask --force ice-2`, which is not
+  bundle-scoped and would have quit and deleted a *different* app installed beside it.
+- **Own release identity.** `Constants.releaseBundleIdentifier` is how the app recognizes its
+  own other build, so that applying a menu bar spacing offset — which quits and relaunches every
+  app that owns a menu bar item — skips itself. Left on Ice 2's identifier, missbar would have
+  treated itself as a third-party app.
+- **Builds unsigned in CI**, replacing the upstream release pipeline, which needs an Apple
+  Developer ID certificate and notarization credentials this fork does not have.
 
-#### Customize the menu bar's appearance
-
-![Menu Bar Appearance](https://github.com/user-attachments/assets/8c22c185-c3d2-49bb-971e-e1fc17df04b3)
-
-#### Menu bar item search
-
-![Menu Bar Item Search](https://github.com/user-attachments/assets/d1a7df3a-4989-4077-a0b1-8e7d5a1ba5b8)
-
-#### Back up your settings, or sync them across Macs
-
-![Backup and restore](Resources/screenshots/settings-backup.png)
-
-[![Download](https://img.shields.io/badge/download-latest-brightgreen?style=flat-square)](https://github.com/teddychan/ice-2/releases/latest)
-![Platform](https://img.shields.io/badge/platform-macOS-blue?style=flat-square)
-![Requirements](https://img.shields.io/badge/requirements-macOS%2026%2B-fa4e49?style=flat-square)
-[![Website](https://img.shields.io/badge/Website-dragonapp.com-015FBA?style=flat-square)](https://www.dragonapp.com/ice-2/)
-[![License](https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square)](LICENSE)
-
-## Contents
-
-- [Screenshots](#screenshots)
-- [Requirements](#requirements)
-- [Install](#install)
-- [Features](#features)
-- [Menu bar sections](#menu-bar-sections)
-- [Troubleshooting](#troubleshooting)
-- [Building from source](#building-from-source)
-- [Tests](#tests)
-- [Contributing](#contributing)
-- [Credits](#credits)
-- [License](#license)
+Upstream's own release infrastructure (DragonKit conformance workflow, signed release workflow,
+Homebrew tap wiring, internal planning docs) is removed rather than left in place to fail.
 
 ## Requirements
 
-- macOS 26 (Tahoe) or later.
-- An Apple Silicon Mac. Ice 2 is built for arm64 only; if you are on an Intel Mac,
-  stay on version 2.4.1, which remains available on the
-  [releases page](https://github.com/teddychan/ice-2/releases).
-- Accessibility and Screen Recording permissions. Ice 2 asks for both on first
-  launch and cannot manage menu bar items without them.
+- macOS 26 (Tahoe) or macOS 27.
+- An Apple Silicon Mac. The app is built for arm64 only.
+- Accessibility and Screen Recording permissions. missbar asks for both on first launch and
+  cannot manage menu bar items without them.
 
 ## Install
 
-### Homebrew
+There is no signed release. Download `missbar.zip` from
+[Actions → Build missbar](https://github.com/NexusKFK/missbar/actions/workflows/build.yml) —
+pick the latest successful run and take the artifact — or from
+[Releases](https://github.com/NexusKFK/missbar/releases) if one has been tagged.
 
 ```sh
-brew install --cask teddychan/tap/ice-2
+unzip missbar.zip
+mv missbar.app /Applications/
+# The build is ad-hoc signed, not Developer ID-signed and notarized, so Gatekeeper
+# quarantines the download. Clear the attribute or macOS will refuse to open it:
+xattr -dr com.apple.quarantine /Applications/missbar.app
+open /Applications/missbar.app
 ```
 
-### Manual
+Then grant **Accessibility** and **Screen Recording** in System Settings ▸ Privacy & Security.
 
-Download the `Ice-2-vX.Y.Z.zip` file from the
-[latest release](https://github.com/teddychan/ice-2/releases/latest) and move the
-unzipped app into your `Applications` folder.
+> [!IMPORTANT]
+> An ad-hoc signature is recomputed on every build, so macOS treats each new build as a
+> different program. After replacing the app with a newer one you will have to remove the old
+> entries in Privacy & Security and grant both permissions again.
 
 ### Uninstall
 
-Quit Ice 2 before uninstalling.
-
-If you installed with Homebrew:
+Quit missbar, delete `/Applications/missbar.app`, then:
 
 ```sh
-brew uninstall --cask teddychan/tap/ice-2
+rm -rf ~/Library/Application\ Support/com.nexuskfk.missbar \
+       ~/Library/Caches/com.nexuskfk.missbar \
+       ~/Library/HTTPStorages/com.nexuskfk.missbar \
+       ~/Library/Preferences/com.nexuskfk.missbar.plist \
+       ~/Library/Saved\ Application\ State/com.nexuskfk.missbar.savedState
 ```
 
-If you installed manually, delete `Ice 2.app` from your `Applications` folder.
+## macOS 27: what works and what does not
 
-To also remove Ice 2 settings and cached data:
+macOS 27 changed how the menu bar is assembled, and the window-based approach every version of
+Ice used cannot see individual icons there any more. On macOS 27 the app uses a different
+backend: Accessibility to discover app bundles and system items, and runtime-loaded
+`MenuBarClientCore` assertions to hide them. macOS 26 keeps the original backend and the full
+feature set.
 
-```sh
-rm -rf ~/Library/Application\ Support/com.dragonapp.ice \
-       ~/Library/Caches/com.dragonapp.ice \
-       ~/Library/HTTPStorages/com.dragonapp.ice \
-       ~/Library/Preferences/com.dragonapp.ice.plist \
-       ~/Library/Saved\ Application\ State/com.dragonapp.ice.savedState
-```
+What this means in practice on macOS 27:
+
+- **Sections are per app, not per icon.** Every menu bar icon belonging to one app shares a
+  section. You choose a section per app in Layout.
+- **Hidden items reveal in the menu bar itself**, not in a separate floating bar.
+- **Three features are unavailable:** the separate floating bar, searching for a single menu bar
+  icon, and temporarily revealing one icon. Their controls and hotkeys are disabled, but your
+  saved bindings and macOS 26 preferences are left intact.
+- **Some system items cannot be assigned independently:** the clock, Control Center, and
+  SystemUIServer extras. They appear separately under "Managed by macOS".
+- **Command-drag in the menu bar** is still how you change the physical order of items.
+- The hiding mechanism rests on a private API behind runtime capability checks. It works today;
+  a future macOS release can take it away again.
+
+`docs/testing/macos27-integration.md` documents the backend in detail.
 
 ## Features
-
-> [!NOTE]
-> Ice 2 is an independent, open-source fork of [Ice](https://github.com/jordanbaird/Ice) — the menu bar manager originally created by [Jordan Baird](https://github.com/jordanbaird) — now actively maintained by [Teddy Chan](https://github.com/teddychan) and carried forward to support modern macOS. Download the latest release [here](https://github.com/teddychan/ice-2/releases/latest) and see the roadmap below for upcoming features.
 
 ### Menu bar item management
 
@@ -114,9 +123,9 @@ rm -rf ~/Library/Application\ Support/com.dragonapp.ice \
 - [x] Show hidden menu bar items by scrolling or swiping in the menu bar
 - [x] Automatically rehide menu bar items
 - [x] Hide application menus when they overlap with shown menu bar items
-- [x] Drag and drop interface to arrange individual menu bar items
-- [x] Display hidden menu bar items in a separate bar (e.g. for MacBooks with the notch)
-- [x] Search menu bar items
+- [x] Drag and drop interface to arrange menu bar items
+- [x] Display hidden menu bar items in a separate bar (macOS 26 only)
+- [x] Search menu bar items (macOS 26 only)
 - [x] Menu bar item spacing (BETA)
 - [x] Profiles for menu bar layout
 - [x] Individual spacer items
@@ -135,142 +144,71 @@ rm -rf ~/Library/Application\ Support/com.dragonapp.ice \
 ### Hotkeys
 
 - [x] Toggle individual menu bar sections
-- [x] Show the search panel
-- [x] Enable/disable the Ice 2 Bar
+- [x] Show the search panel (macOS 26 only)
+- [x] Enable/disable the floating bar (macOS 26 only)
 - [x] Show/hide section divider icons
 - [x] Toggle application menus
 - [x] Enable/disable auto rehide
-- [x] Temporarily show individual menu bar items
+- [x] Temporarily show individual menu bar items (macOS 26 only)
 
 ### Other
 
 - [x] Launch at login
-- [x] Automatic updates
-- [x] Back up & restore settings to a folder you choose (sync across Macs via Dropbox / iCloud Drive / Google Drive)
-- [ ] Menu bar widgets
+- [x] Back up & restore settings to a folder you choose
+- [ ] Automatic updates — deliberately disabled in this fork; see [What this fork changes](#what-this-fork-changes)
 
 ## Menu bar sections
 
-Ice 2 divides the menu bar into three sections — **Visible**, **Hidden**, and
-**Always-Hidden** — and installs one control item per enabled section as a divider
-between them. macOS adds new items to the left end of the menu bar, which is where
-the always-hidden section lives.
+missbar divides the menu bar into three sections — **Visible**, **Hidden**, and
+**Always-Hidden** — and installs one control item per enabled section as a divider between
+them. macOS adds new items to the left end of the menu bar, which is where the always-hidden
+section lives.
 
-- **Click** Ice 2's icon to toggle its section.
+- **Click** missbar's icon to toggle its section.
 - **Option-click** it to toggle the always-hidden section.
-- **Control-click** it to open Ice 2's menu. Turn this off under
+- **Control-click** it to open missbar's menu. Turn this off under
   **Settings ▸ Advanced ▸ Other**.
 - **Command-drag** an item along the menu bar to move it into another section.
 
-The always-hidden section is enabled by default. Turn it off, or change how the
-dividers look, under **Settings ▸ Advanced ▸ Menu Bar Sections**.
-
-## Troubleshooting
-
-Common problems and their fixes are collected in
-[FREQUENT_ISSUES.md](FREQUENT_ISSUES.md) — items landing in the always-hidden
-section, items that appear to have been removed, item order not being remembered,
-and the `Ice 2 cannot arrange menu bar items in automatically hidden menu bars`
-error.
-
-If Ice 2 cannot see or move your menu bar items, check that it still has
-Accessibility and Screen Recording permission in **System Settings ▸ Privacy &
-Security**. Granting Screen Recording may require relaunching Ice 2.
-
-### Why does Ice 2 require macOS 26 and later?
-
-Ice 2 uses a number of system APIs that are available starting in macOS 26, and it
-builds against the macOS 26 SDK. As such, there are no plans to support earlier
-versions of macOS. Older releases remain downloadable on the
-[releases page](https://github.com/teddychan/ice-2/releases).
-
-### Can I back up, restore, or sync my settings?
-
-Yes. Open **Settings ▸ Backup & Restore** and choose a backup folder. Use **Back Up Now** to save a snapshot of all your Ice 2 settings (layout profiles, spacers, triggers, hotkeys, and appearance), and Ice 2 also backs up automatically when you quit. The newest 10 backups are kept; you can restore any of them with one click (Ice 2 relaunches to apply).
-
-To **sync across Macs** or move to a new Mac, point the backup folder at a synced location such as Dropbox, iCloud Drive, or Google Drive — your settings then appear on your other Macs, where you can restore them.
+The always-hidden section is enabled by default. Turn it off, or change how the dividers look,
+under **Settings ▸ Advanced ▸ Menu Bar Sections**.
 
 ## Building from source
 
-Ice 2 is a plain Xcode project — no package manager step is required.
-
-1. Clone the repo and open `Ice.xcodeproj` in Xcode 26 or later (the project targets
-   the macOS 26 SDK and builds for arm64).
-2. Select the **Ice** scheme and run. The product is named `Ice 2.app`.
-
-From the command line:
+Requires Xcode 26 or later (a full Xcode install — Command Line Tools alone cannot build an
+`.xcodeproj` app target).
 
 ```sh
-xcodebuild -scheme Ice -configuration Debug -destination 'generic/platform=macOS' build
-xcodebuild -scheme Ice -destination 'platform=macOS' test
+git clone https://github.com/NexusKFK/missbar.git
+cd missbar
+xcodebuild build -project Ice.xcodeproj -scheme Ice -configuration Release \
+  -destination 'platform=macOS,arch=arm64' -derivedDataPath build \
+  CODE_SIGN_IDENTITY="-" CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM=""
 ```
 
-The **Ice** scheme's test action runs the `IceTests` unit-test target.
+The app lands at `build/Build/Products/Release/missbar.app`.
 
-The Debug configuration builds the app as `com.dragonapp.ice.debug`, displayed as
-**Ice 2 Debug**, never the release id — so neither a local build nor the test host
-(which runs *inside* the app) can read or write the settings of an installed Ice 2.
-The product itself is the isolated app; nothing re-ids it afterwards, so only one
-bundle ever claims that id.
+If you have no local Xcode, push to this repo instead and let
+`.github/workflows/build.yml` build it on a GitHub-hosted runner.
 
-To try a local build alongside an installed copy of Ice 2, use the debug runner. It
-builds the **Ice** scheme and launches the product, which already has its own name,
-permissions, and settings, alongside the release app:
-
-```sh
-bash scripts/run-debug.sh
-```
-
-Swift sources are linted with [SwiftLint](https://github.com/realm/SwiftLint)
-(`.swiftlint.yml`); CI runs `swiftlint lint --strict` on every pull request that
-touches Swift files.
+The Debug configuration builds as `com.nexuskfk.missbar.debug`, displayed as **missbar Debug**,
+so it runs beside an installed missbar without touching its preferences.
 
 ## Tests
 
-The unit tests live in `IceTests/` and are written with Swift Testing. They cover the
-pure, permission-free parts of Ice 2: menu bar item tags and layout profiles, section
-names and triggers, appearance configuration and its settings upgrades, colors and
-gradients, hotkeys (key codes, modifiers, combinations, and actions), menu bar image
-processing and window identification, code signing checks, settings persistence and
-backup, and the shared concurrency helpers. Anything that needs live `NSStatusItem`s,
-event taps, or granted permissions is covered by the manual checklist in
-[docs/testing/layout-pane-manual-tests.md](docs/testing/layout-pane-manual-tests.md)
-instead. CI runs the suite on every pull request; the Debug configuration signs ad-hoc,
-so no Apple Development certificate is needed to run it locally either.
-
-[![Tests](https://github.com/teddychan/ice-2/actions/workflows/tests.yml/badge.svg)](https://github.com/teddychan/ice-2/actions/workflows/tests.yml)
-
-```bash
-xcodebuild test -project Ice.xcodeproj -scheme Ice \
-  -destination 'platform=macOS,arch=arm64'
+```sh
+xcodebuild test -project Ice.xcodeproj -scheme Ice -destination 'platform=macOS,arch=arm64'
 ```
 
-| Metric | Value |
-|---|---|
-| Test cases | 261 passing |
-| Line coverage | 14.3% of the `Ice 2.app` target |
-| Measured on | v2.9.10 (`f55a610`), Xcode 26.6 on macOS 26.5.2 |
-
-Coverage is low by nature rather than by neglect: most of the app target is SwiftUI
-settings views and menu-bar machinery that needs live status items, event taps, and
-granted permissions, none of which run headlessly. The tests concentrate on the logic
-that can be exercised without them.
-
-## Contributing
-
-Issues and pull requests are welcome.
-
-- Read the [Code of Conduct](CODE_OF_CONDUCT.md) before taking part.
-- Check [FREQUENT_ISSUES.md](FREQUENT_ISSUES.md) first — several common reports are
-  already answered there.
-- Keep the build lint-clean; CI runs SwiftLint in strict mode.
-- Release mechanics (tagging, signing, notarization, the Sparkle appcast, and the
-  Homebrew cask) are documented in [docs/RELEASING.md](docs/RELEASING.md).
+Also run in CI by `.github/workflows/tests.yml`.
 
 ## Credits
 
-Ice 2 is a fork of [Ice](https://github.com/jordanbaird/Ice), created by [Jordan Baird](https://github.com/jordanbaird). All credit for the original app goes to him and its contributors. Ice 2 is currently maintained by [Teddy Chan](https://github.com/teddychan).
+- [Jordan Baird](https://github.com/jordanbaird) — the original
+  [Ice](https://github.com/jordanbaird/Ice).
+- [Teddy Chan](https://github.com/teddychan) — [Ice 2](https://github.com/teddychan/ice-2),
+  including the macOS 26 and macOS 27 backends this fork depends on entirely.
 
 ## License
 
-Ice 2 is available under the [GPL-3.0 license](LICENSE), the same license as the original Ice.
+GPL-3.0, inherited from Ice and Ice 2. See [LICENSE](LICENSE).

@@ -59,7 +59,7 @@ struct DefaultsAndSettingsLoadTests {
             let item = NativeMenuBarItem(id: "bundle:com.example.saved", name: "Saved")
             manager.setSection(.hidden, for: item)
             let before = try #require(Defaults.data(forKey: .nativeMenuBarSections))
-            for id in ["system:2", "system:8", "bundle:com.dragonapp.ice.debug", "unmanaged:extra"] {
+            for id in ["system:2", "system:8", "bundle:com.nexuskfk.missbar.debug", "unmanaged:extra"] {
                 manager.setSection(.alwaysHidden, for: NativeMenuBarItem(id: id, name: id))
                 #expect(!manager.moveItem(id: id, to: .alwaysHidden))
             }

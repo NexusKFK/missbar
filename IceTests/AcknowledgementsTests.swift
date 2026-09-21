@@ -8,7 +8,7 @@ import PDFKit
 import Testing
 @testable import Ice_2
 
-/// Pins the third-party notices Ice 2 ships.
+/// Pins the third-party notices missbar ships.
 ///
 /// These drifted silently: the bundled document named LaunchAtLogin long after the dependency
 /// was dropped, and never gained DragonKit. Nothing in the app reads the document, so no
@@ -112,7 +112,7 @@ struct AcknowledgementsTests {
     /// The carve-out is not a wart, it is the kit's rule: `Attribution` is documented as "a
     /// third-party thing an app bundles", and DragonKit is Dragon App's own shared library, so
     /// `AboutContent.creditRows` already emits an unconditional `Built with → DragonKit vX.Y.Z`
-    /// row for it. Attributing it as well printed DragonKit twice in Credits and made Ice 2 the
+    /// row for it. Attributing it as well printed DragonKit twice in Credits and made missbar the
     /// only one of the five apps that did — the kit's own sample app links DragonKit and
     /// DragonKitUpdates and still attributes Sparkle alone.
     ///
@@ -161,7 +161,7 @@ struct AcknowledgementsTests {
         // notices page no longer compiles — spectacle-2 and the sample app had listed
         // `Sparkle → MIT` in Credits with no page anywhere. This still pins the URL, because a
         // required parameter says nothing about which page it points at.
-        #expect(AboutConfig.content.licensesURL.absoluteString == "https://www.dragonapp.com/ice-2/licenses/")
+        #expect(AboutConfig.content.licensesURL.absoluteString == "https://github.com/NexusKFK/missbar/blob/main/THIRD-PARTY-LICENSES.md")
     }
 
     @Test func onlyThePdfIsBundled() {

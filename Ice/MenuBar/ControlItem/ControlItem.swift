@@ -569,7 +569,7 @@ final class ControlItem {
         menu.addItem(.separator())
 
         // Standard lifecycle items (SKILL.md §5A), flattened to the top level
-        // rather than nested in an "Ice 2" submenu. They come from DragonKit so
+        // rather than nested in an "missbar" submenu. They come from DragonKit so
         // every Dragon app shows the same titles, symbols, and order instead of
         // drifting. `items(_:)` supplies the divider before Quit itself, so the
         // separator above is the only one added here. Uninstall is deliberately

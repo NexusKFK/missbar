@@ -35,7 +35,7 @@ struct NativeMenuBarItem: Identifiable, Equatable, Sendable {
 }
 
 enum NativeMenuBarPolicy {
-    static let ownBundles: Set<String> = ["com.dragonapp.ice", "com.dragonapp.ice.debug"]
+    static let ownBundles: Set<String> = ["com.nexuskfk.missbar", "com.nexuskfk.missbar.debug"]
     static let systemNames = ["Battery", "Bluetooth", "Clock", "Displays", "Keyboard", "Sound", "Wi-Fi", "Screen Mirroring", "Control Center"]
 
     static func systemID(for identifier: String) -> Int? {
@@ -104,7 +104,7 @@ enum NativeMenuBarPolicy {
     static func nativeID(for tag: MenuBarItemTag) -> String? {
         guard !tag.isControlItem, !tag.isSpacerItem, case .string(let bundle) = tag.namespace,
               !ownBundles.contains(bundle) else { return nil }
-        if bundle == "com.dragonapp.ice.native.system" {
+        if bundle == "com.nexuskfk.missbar.native.system" {
             guard let number = Int(tag.title), (0...8).contains(number) else { return nil }
             return "system:\(number)"
         }
@@ -120,7 +120,7 @@ enum NativeMenuBarPolicy {
             return MenuBarItemTag(namespace: .string(String(id.dropFirst(7))), title: "Ice.Native.Bundle")
         }
         if id.hasPrefix("system:") {
-            return MenuBarItemTag(namespace: .string("com.dragonapp.ice.native.system"), title: String(id.dropFirst(7)))
+            return MenuBarItemTag(namespace: .string("com.nexuskfk.missbar.native.system"), title: String(id.dropFirst(7)))
         }
         return nil
     }

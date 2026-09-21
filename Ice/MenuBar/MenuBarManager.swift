@@ -283,7 +283,7 @@ final class MenuBarManager: ObservableObject {
         return AXHelpers.role(for: element) == .menuBar
     }
 
-    /// Shows the secondary context menu: Ice 2's own appearance shortcut, then Settings.
+    /// Shows the secondary context menu: missbar's own appearance shortcut, then Settings.
     func showSecondaryContextMenu(at point: CGPoint) {
         let menu = NSMenu(title: Constants.displayName)
 

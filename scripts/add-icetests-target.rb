@@ -16,13 +16,13 @@ if test.nil?
     s = config.build_settings
     # Explicit PRODUCT_NAME so the test bundle's Swift module name is valid.
     s['PRODUCT_NAME'] = 'IceTests'
-    s['PRODUCT_BUNDLE_IDENTIFIER'] = 'com.dragonapp.ice.IceTests'
+    s['PRODUCT_BUNDLE_IDENTIFIER'] = 'com.nexuskfk.missbar.IceTests'
     s['SWIFT_VERSION'] = '5.0'
     s['MACOSX_DEPLOYMENT_TARGET'] = '26.0'
     s['GENERATE_INFOPLIST_FILE'] = 'YES'
-    # The Ice app target's product is "Ice 2.app" (PRODUCT_NAME = "Ice 2"),
-    # so the host binary lives at "Ice 2.app/Contents/MacOS/Ice 2".
-    s['TEST_HOST'] = '$(BUILT_PRODUCTS_DIR)/Ice 2.app/Contents/MacOS/Ice 2'
+    # The Ice app target's product is "missbar.app" (PRODUCT_NAME = "missbar"),
+    # so the host binary lives at "missbar.app/Contents/MacOS/missbar".
+    s['TEST_HOST'] = '$(BUILT_PRODUCTS_DIR)/missbar.app/Contents/MacOS/missbar'
     s['BUNDLE_LOADER'] = '$(TEST_HOST)'
     s['DEVELOPMENT_TEAM'] = 'K2ATHQPJDP'
     s['CODE_SIGN_STYLE'] = 'Automatic'

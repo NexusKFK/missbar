@@ -16,7 +16,7 @@ import Testing
 @MainActor
 struct RelaunchTests {
     private func arguments(
-        bundlePath: String = "/Users/x/Library/Developer/Ice 2 Debug.app",
+        bundlePath: String = "/Users/x/Library/Developer/missbar Debug.app",
         pid: Int32 = 4242
     ) -> [String] {
         AppState.relaunchHelperArguments(bundlePath: bundlePath, pid: pid)
@@ -29,8 +29,8 @@ struct RelaunchTests {
         // debug bundle's own path contains a space, so this is the normal case.
         #expect(args.count == 4)
         #expect(args[0] == "-c")
-        #expect(args[3] == "/Users/x/Library/Developer/Ice 2 Debug.app")
-        #expect(!args[1].contains("Ice 2 Debug.app"))
+        #expect(args[3] == "/Users/x/Library/Developer/missbar Debug.app")
+        #expect(!args[1].contains("missbar Debug.app"))
         #expect(args[1].contains("\"$1\""))
     }
 

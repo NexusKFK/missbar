@@ -124,12 +124,12 @@ struct NativeMenuBarPolicyTests {
 
     @Test func newlyLaunchedAppsStayVisibleAndIceCannotHideItself() throws {
         let config = try #require(configuration(
-            ["bundle:com.example.one": .hidden, "bundle:com.dragonapp.ice": .hidden],
-            running: ["com.example.one", "com.newapp", "com.dragonapp.ice"]
+            ["bundle:com.example.one": .hidden, "bundle:com.nexuskfk.missbar": .hidden],
+            running: ["com.example.one", "com.newapp", "com.nexuskfk.missbar"]
         ))
         #expect(config.bundles.contains("com.newapp"))
-        #expect(config.bundles.contains("com.dragonapp.ice"))
-        #expect(config.bundles.contains("com.dragonapp.ice.debug"))
+        #expect(config.bundles.contains("com.nexuskfk.missbar"))
+        #expect(config.bundles.contains("com.nexuskfk.missbar.debug"))
     }
 
     @Test func systemVisibilityIsIndependentAndProtectedItemsStayAllowed() throws {
@@ -145,7 +145,7 @@ struct NativeMenuBarPolicyTests {
         let item = NativeMenuBarPolicy.item(bundle: "com.example.one", identifier: nil, name: "One")
         #expect(item?.id == "bundle:com.example.one")
         #expect(item?.canAssign == true)
-        #expect(NativeMenuBarPolicy.item(bundle: "com.dragonapp.ice.debug", identifier: nil, name: "Ice") == nil)
+        #expect(NativeMenuBarPolicy.item(bundle: "com.nexuskfk.missbar.debug", identifier: nil, name: "missbar") == nil)
         #expect(NativeMenuBarPolicy.item(bundle: "com.apple.TextInputMenuAgent", identifier: nil, name: "Input")?.id == "system:4")
         #expect(NativeMenuBarPolicy.item(bundle: nil, identifier: "com.apple.menuextra.focusmode", name: "Focus")?.canAssign == false)
     }
@@ -474,7 +474,7 @@ struct MenuBarLayoutProfileCaptureTests {
     @Test func applyErrorHasUserFacingDescription() {
         #expect(
             MenuBarLayoutProfilesSettings.ApplyError.missingAppState.errorDescription
-                == "Ice is not ready to apply layout profiles."
+                == "missbar is not ready to apply layout profiles."
         )
     }
 }

@@ -8,7 +8,7 @@ import Foundation
 import Testing
 @testable import Ice_2
 
-/// Pins the configuration Ice 2 hands to DragonKit's uninstaller. This is the seam where a
+/// Pins the configuration missbar hands to DragonKit's uninstaller. This is the seam where a
 /// mistake silently changes what a destructive, unrecoverable operation deletes, so the
 /// contract is asserted here rather than trusted to review: the domain that gets wiped, every
 /// path removed alongside it, the checklist the user is shown, and — just as importantly —
@@ -19,7 +19,7 @@ struct UninstallConfigTests {
 
     @Test func wipesTheRunningBundlesDomain() {
         // The running bundle's id, never a hardcoded release id: a debug build
-        // (com.dragonapp.ice.debug) must clean its own domain and saved state, and must
+        // (com.nexuskfk.missbar.debug) must clean its own domain and saved state, and must
         // never touch the installed release's.
         #expect(config.bundleID == Bundle.main.bundleIdentifier)
         #expect(!config.bundleID.isEmpty)
@@ -27,12 +27,12 @@ struct UninstallConfigTests {
 
     @Test func namesTheRunningBuildNotTheReleaseName() {
         // Same rule as the bundle id above, for the name the confirmation sheet shows:
-        // the running bundle's display name, never a hardcoded "Ice 2". A debug build
-        // must say "Ice 2 Debug" so the sheet for a destructive, unrecoverable action
+        // the running bundle's display name, never a hardcoded "missbar". A debug build
+        // must say "missbar Debug" so the sheet for a destructive, unrecoverable action
         // can't be mistaken for the installed release's. Asserted against the bundle
         // rather than a literal so it holds for both builds.
         #expect(config.appName == Bundle.main.displayName)
-        #expect(config.appName == "Ice 2 Debug") // the test host is the Debug build
+        #expect(config.appName == "missbar Debug") // the test host is the Debug build
     }
 
     @Test func namesExactlyWhatIsRemoved() {
@@ -75,7 +75,7 @@ struct UninstallConfigTests {
 
     @Test func scopesEveryCleanupPathToTheRunningBundle() {
         // The guardrail behind `wipesTheRunningBundlesDomain`: a debug build
-        // (com.dragonapp.ice.debug) must never delete the installed release's caches, so every
+        // (com.nexuskfk.missbar.debug) must never delete the installed release's caches, so every
         // path has to be built from the *running* bundle id and stay inside ~/Library.
         let library = FileManager.default.homeDirectoryForCurrentUser.appending(path: "Library")
         for url in config.extraCleanupPaths {
@@ -87,7 +87,7 @@ struct UninstallConfigTests {
     }
 
     @Test func neverDeletesTheUsersBackups() {
-        // Uninstalling removes everything Ice 2 owns *except* backups — they exist precisely to
+        // Uninstalling removes everything missbar owns *except* backups — they exist precisely to
         // outlive a reinstall or a move to a new Mac, so deleting them would defeat the feature.
         // They're safe structurally rather than by luck: the default folder is under ~/Documents
         // and a configured one can be anywhere (Dropbox, iCloud Drive), while every cleanup path
@@ -104,39 +104,32 @@ struct UninstallConfigTests {
         #expect(!defaultFolder.path.hasPrefix(library.path + "/"))
     }
 
-    @Test func clearsHomebrewsReceiptOnlyForTheReleaseBuild() {
-        // Ice 2 ships as the cask `ice-2` (`Casks/ice-2.rb` in teddychan/homebrew-tap), so the
-        // teardown clears brew's receipt too — left behind, it claims the cask is still installed
-        // and `brew install --cask ice-2` refuses for an app that isn't there.
+    @Test func neverIssuesAHomebrewCaskToken() {
+        // missbar is not distributed through Homebrew, so there is no receipt for the teardown to
+        // clear and no token it may legitimately issue.
         //
-        // Gated on the running bundle id for the same reason every path above is: `brew uninstall
-        // --cask` deletes the app *brew* recorded, so a debug build (com.dragonapp.ice.debug),
-        // which brew never installed, would delete the installed release instead of itself.
-        //
-        // The identity is passed in rather than read from the test host, because the host is
-        // always the Debug build: the previous version of this test asked
-        // `Bundle.main.bundleIdentifier` and could therefore only ever exercise the `nil` branch,
-        // asserting as a fact about Ice 2 something that was only a fact about CI.
+        // This is asserted rather than left implicit because the failure is destructive in a way
+        // the uninstaller cannot take back: `brew uninstall --cask` is not bundle-scoped. It quits
+        // and deletes whatever app brew's receipt points at, so inheriting Ice 2's `ice-2` token
+        // would make missbar's uninstaller delete a *different* app installed beside it.
         func token(for bundleID: String?) -> String? {
             IceUninstallConfig.homebrewCask(forBundleID: bundleID)
         }
 
-        #expect(token(for: "com.dragonapp.ice") == "ice-2")
-        #expect(token(for: "com.dragonapp.ice.debug") == nil, "the debug re-id is why this gate exists")
-        #expect(token(for: "com.dragonapp.clipmenu-2") == nil)
+        #expect(token(for: "com.nexuskfk.missbar") == nil)
+        #expect(token(for: "com.nexuskfk.missbar.debug") == nil)
+        #expect(token(for: "com.dragonapp.ice") == nil, "Ice 2's cask is not ours to uninstall")
         #expect(token(for: nil) == nil, "a build that can't state its id must authorise nothing")
 
-        // And that `config` actually asks: without this, hardcoding the token back into the
-        // initializer would leave every case above still passing. Holds in either build — it
-        // pins the wiring, not a configuration-specific answer.
+        // And that `config` actually asks, rather than hardcoding an answer past the gate.
         #expect(config.homebrewCask == token(for: Bundle.main.bundleIdentifier))
     }
 
     @Test func deletesNothingBeyondTheBundlesOwnFolders() {
-        // Ice 2's settings live in `UserDefaults.standard` (`Defaults.store`), i.e. the
+        // missbar's settings live in `UserDefaults.standard` (`Defaults.store`), i.e. the
         // bundle-id domain the uninstaller already wipes — so no extra suites.
         #expect(config.suiteNames.isEmpty)
-        // Ice 2 keeps no separate user data — its settings *are* its data, always removed —
+        // missbar keeps no separate user data — its settings *are* its data, always removed —
         // so there is no optional "also delete data" choice to opt into.
         #expect(config.optionalDataToggle == nil)
     }

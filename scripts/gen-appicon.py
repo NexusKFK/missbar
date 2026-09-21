@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the Ice 2 app icon: two glass wireframe cubes side by side.
+"""Generate the missbar app icon: two glass wireframe cubes side by side.
 
 Emits a 1024x1024 master SVG (build/appicon-master.svg) matching the existing
 icon's blue tile (inset 100, corner radius ~192, vertical gradient), then the

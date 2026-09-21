@@ -143,7 +143,7 @@ enum SettingsBackup {
     /// folders on its own; it does nothing for a path spelled out in source like this one. Both
     /// builds shared the folder, and ``prune(in:keeping:)`` keeps the newest *files* rather than
     /// the newest per build — so with automatic backups on by default, ten quits of a debug
-    /// build deleted every backup the installed Ice 2 had written, and "restore the newest
+    /// build deleted every backup the installed missbar had written, and "restore the newest
     /// backup" in the release app could restore debug settings.
     ///
     /// An unknown id falls to the Debug folder rather than the release one, the same direction
@@ -153,7 +153,7 @@ enum SettingsBackup {
         home: URL = FileManager.default.homeDirectoryForCurrentUser,
         bundleID: String? = Bundle.main.bundleIdentifier
     ) -> URL {
-        let name = bundleID == Constants.releaseBundleIdentifier ? "Ice Backups" : "Ice Backups (Debug)"
+        let name = bundleID == Constants.releaseBundleIdentifier ? "missbar Backups" : "missbar Backups (Debug)"
         return home.appending(path: "Documents/\(name)", directoryHint: .isDirectory)
     }
 
@@ -165,9 +165,9 @@ enum SettingsBackup {
         return formatter.string(from: date)
     }
 
-    /// Backup filename for a date, e.g. "Ice-Settings-2026-06-29-013045.icebackup".
+    /// Backup filename for a date, e.g. "missbar-Settings-2026-06-29-013045.icebackup".
     static func fileName(for date: Date) -> String {
-        "Ice-Settings-\(timestamp(date)).\(fileExtension)"
+        "missbar-Settings-\(timestamp(date)).\(fileExtension)"
     }
 
     /// Write a backup of `defaults` into `folder` (created if needed) and return

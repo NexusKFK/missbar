@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  missbar's Sparkle feed, deliberately empty.
+
+  `SUFeedURL` in App/Info.plist points here rather than at Ice 2's appcast. That is the whole
+  reason this file exists: left on the upstream feed, missbar would find an Ice 2 release,
+  download it, and replace itself with a differently-named app.
+
+  An empty channel is a valid appcast, so "Check for Updates…" reports that the app is up to
+  date instead of erroring. Releases here are installed by hand — they are ad-hoc signed, and
+  Sparkle will not install an update it cannot verify against an `SUPublicEDKey` anyway.
+-->
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+    <channel>
+        <title>missbar</title>
+        <link>https://github.com/NexusKFK/missbar</link>
+        <description>Update feed for missbar. Updates are installed manually from the Releases page.</description>
+        <language>en</language>
+    </channel>
+</rss>

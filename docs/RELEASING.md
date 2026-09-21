@@ -1,69 +1,47 @@
-# Releasing Ice 2
+# Releasing missbar
 
-Pushing a `vX.Y.Z` tag to `teddychan/ice-2` triggers
-`.github/workflows/release.yml`, which builds, Developer ID-signs, notarizes,
-and staples the app, uploads `Ice-2-vX.Y.Z.zip` to the GitHub Release,
-publishes the signed Sparkle appcast to `docs/ice-2/appcast.xml` **in this
-repo**, and bumps the Homebrew cask `teddychan/tap/ice-2`.
+missbar has no Apple Developer ID, so there is no signed, notarized release pipeline. What
+upstream Ice 2 does with Developer ID certificates, notarization and a Homebrew tap, this fork
+replaces with a single unsigned build in `.github/workflows/build.yml`.
 
-The app-owned feed is the one the app reads — `SUFeedURL` in
-`App/Info.plist` is
-`https://raw.githubusercontent.com/teddychan/ice-2/main/docs/ice-2/appcast.xml`.
-The same appcast was also copied to `teddychan/www.dragonapp.com`
-(`https://www.dragonapp.com/ice-2/appcast.xml`) during the v2.14.3–v2.15.0
-migration, as a **temporary mirror** for installs still on v2.14.3 or older.
-That mirror was retired at v2.15.0; `docs/ice-2/appcast.xml` in this repo has
-been the only production feed since. See the `appcast_mirror_repo` comment
-in `.github/workflows/release.yml` — that comment is the source of truth for
-the migration and its retirement.
+## Every build
 
-## One-time setup
+Pushing to `main` (or running the workflow by hand from the Actions tab) builds the Release
+configuration on a `macos-26` runner, ad-hoc signs it, and uploads `missbar.zip` as a workflow
+artifact. That artifact is the normal way to get a build.
 
-### 1. Repository secrets (Settings → Secrets and variables → Actions)
-Reuse the same values already on `clipmenu-2` (same Apple Team `4AF3KGGV29`):
+## Tagged releases
 
-- `DEVELOPER_ID_CERT_P12_BASE64`
-- `DEVELOPER_ID_CERT_PASSWORD`
-- `NOTARY_KEY_P8_BASE64`
-- `NOTARY_KEY_ID`
-- `NOTARY_ISSUER_ID`
-- `PUBLIC_RELEASE_TOKEN` (PAT with write access to `teddychan/homebrew-tap`,
-  used only for the Homebrew cask bump. The appcast in *this* repo is
-  published with the built-in `GITHUB_TOKEN`, which `permissions: contents:
-  write` in `release.yml` covers.)
-- `SPARKLE_EDDSA_PRIVATE_KEY` (the shared EdDSA private key; its public half
-  `p+F/ivF5bAYcmuNuCMNHcRv123A6LHFpCBagFm7Adu8=` is in `App/Info.plist`)
+Pushing a `vX.Y.Z` tag runs the same job and additionally attaches `missbar.zip` to a GitHub
+Release. No secrets are required — the workflow uses the automatic `github.token`.
 
-### 2. Runner
-The workflow runs on a **GitHub-hosted** macOS runner — public repos get free
-Actions minutes, so no self-hosted runner is required. Ice 2 targets the macOS
-26 SDK, which the shared pipeline's default `macos-15` image lacks, so the
-caller passes `swiftpm_runner: macos-26`; despite the name that input drives
-the job's `runs-on` for all build kinds, not just swiftpm. The "Select Xcode"
-step then picks the newest Xcode on the image.
+```sh
+git tag v2.16.0
+git push origin v2.16.0
+```
 
-## Cutting a release
-1. Bump `MARKETING_VERSION` in `Ice.xcodeproj` and commit.
-2. `git tag vX.Y.Z && git push origin vX.Y.Z`.
-3. Watch the Release workflow. On success, verify:
-   - The feed the app actually reads — prints X.Y.Z:
+Bump `MARKETING_VERSION` (and, if you want it to move, `CURRENT_PROJECT_VERSION`) in
+`Ice.xcodeproj` first. Nothing enforces that the tag and the version agree; upstream's release
+workflow had a guard for that, and it went with the rest of the signing pipeline.
 
-     ```bash
-     curl -s https://raw.githubusercontent.com/teddychan/ice-2/main/docs/ice-2/appcast.xml | grep sparkle:shortVersionString
-     ```
+## What the app does about updates
 
-     Check this URL, not `https://www.dragonapp.com/ice-2/appcast.xml`: that
-     copy is the retired mirror, frozen at v2.14.7 since the release path
-     stopped publishing to it at v2.15.0 — it will never show a new release,
-     cache or no cache.
-   - `brew update && brew livecheck teddychan/tap/ice-2` → X.Y.Z
-   - `spctl -a -t install` accepts the downloaded zip's app.
+Nothing automatic, deliberately.
 
-## Notes
-- The app bundle id is `com.dragonapp.ice` (rebranded from the upstream
-  `com.jordanbaird.Ice`). Keep the cask's `uninstall`/`zap` paths in sync with
-  this id.
-- The first tagged run validates the `xcodebuild` export-signing path. If
-  `-exportArchive` errors on signing style, set `signingStyle` to `automatic` in
-  `.github/release/exportOptions.plist` and drop the manual `CODE_SIGN_*`
-  overrides from the archive step.
+`SUFeedURL` in `App/Info.plist` points at `docs/appcast.xml` in this repo, which is a valid
+appcast with no items. "Check for Updates…" therefore reports that the app is up to date
+instead of erroring, and missbar can never download a release of a different app.
+
+This matters because of what it replaced: the feed was inherited pointing at ice-2's appcast,
+which would have made missbar update itself into Ice 2 at the first background check.
+
+`SUPublicEDKey` was removed along with it — it was Ice 2's release keypair, and Sparkle will not
+install an update it cannot verify against a key we do not hold. Publishing real updates through
+Sparkle would mean generating an EdDSA keypair, putting the public half back in `Info.plist`,
+and signing each release. Installing by hand from the Releases page avoids all of it.
+
+## Installing what you built
+
+The build is ad-hoc signed, so Gatekeeper quarantines the download and macOS treats every build
+as a different program. See [Install](../README.md#install) in the README — in particular, both
+Accessibility and Screen Recording have to be granted again after replacing the app.

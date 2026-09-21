@@ -1,6 +1,6 @@
 # macOS 27 compatibility prototype
 
-This is an isolated experiment, not a replacement backend for Ice 2. It does not
+This is an isolated experiment, not a replacement backend for missbar. It does not
 install or launch a new Ice build, migrate profiles, move icons, or write menu bar
 preferences. The prototype app has its own bundle identifier.
 
@@ -37,7 +37,7 @@ review it before sharing.
 
 ## Observed on 2026-09-17
 
-Environment: macOS 27.0 (26A428), Xcode 26.6, Ice 2 release 2.15.2 (1389).
+Environment: macOS 27.0 (26A428), Xcode 26.6, missbar release 2.15.2 (1389).
 
 * The existing `scripts/menubar-probe.swift` returned one main menu bar window,
   at layer 24, and **zero individual item windows**. This reproduces the legacy

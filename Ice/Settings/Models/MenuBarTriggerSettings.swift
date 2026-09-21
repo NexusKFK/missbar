@@ -149,7 +149,7 @@ final class MenuBarTriggerSettings: ObservableObject {
             .store(in: &cancellables)
     }
 
-    /// Offering the frontmost app as a trigger candidate skips *any* Ice 2 build, not just this
+    /// Offering the frontmost app as a trigger candidate skips *any* missbar build, not just this
     /// process: with a debug build running beside the installed release, each would otherwise
     /// offer the other as "the app to trigger on", which is never something a user means.
     private func updateCandidate(with app: NSRunningApplication?) {

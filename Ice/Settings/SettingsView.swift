@@ -7,9 +7,9 @@ import DragonKit
 import DragonKitUpdates
 import SwiftUI
 
-/// Ice 2's settings window.
+/// missbar's settings window.
 ///
-/// **This shell is deliberately Ice 2's own, not DragonKit's `SettingsShell`.** The kit's shell
+/// **This shell is deliberately missbar's own, not DragonKit's `SettingsShell`.** The kit's shell
 /// is the data-driven generalization of this view, and adopting it is the obvious move — but it
 /// models one flat sidebar section of `Image(systemName:)` rows against a `String?` selection,
 /// and five things here have no expression in it:
@@ -147,7 +147,7 @@ struct SettingsView: View {
         case .updates:
             // DragonKit's pane owns the auto-check / auto-download toggles, the
             // "Check for Updates…" button, and the last-checked time. As with Uninstall,
-            // Ice 2 renders `paneBody` directly because it owns its own sidebar.
+            // missbar renders `paneBody` directly because it owns its own sidebar.
             UpdatesSettingsPane(updater: appState.updatesManager.updater)
                 .paneBody
         case .advanced:
@@ -162,7 +162,7 @@ struct SettingsView: View {
             AboutPane(content: AboutConfig.content)
         case .uninstall:
             // DragonKit's pane confirms inline and runs the teardown itself; Cancel goes back
-            // to General. `paneBody` is the pane's content — Ice 2 owns its own sidebar, so it
+            // to General. `paneBody` is the pane's content — missbar owns its own sidebar, so it
             // renders that directly instead of going through the kit's `SettingsShell`.
             UninstallSettingsPane(
                 config: IceUninstallConfig.config,

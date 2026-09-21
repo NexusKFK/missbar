@@ -22,7 +22,7 @@ jobs:
       - name: Xcode version
         run: xcodebuild -version
 
-      # The Ice scheme's test action runs the IceTests target, hosted in the Ice 2 app. The
+      # The Ice scheme's test action runs the IceTests target, hosted in the missbar app. The
       # Debug configuration signs ad-hoc ("Sign to Run Locally"), so the suite builds on this
       # runner with no Apple Development certificate and needs no signing overrides. Package
       # dependencies resolve automatically from the committed Package.resolved.

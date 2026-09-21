@@ -146,7 +146,7 @@ struct MenuBarAppearanceEditor: View {
     }
 }
 
-/// The "Menu Bar Icon" chooser, shown in the Appearance settings pane when the Ice 2 icon is visible.
+/// The "Menu Bar Icon" chooser, shown in the Appearance settings pane when the missbar icon is visible.
 private struct MenuBarIconSettings: View {
     @EnvironmentObject var appState: AppState
     @ObservedObject var settings: GeneralSettings

@@ -6,7 +6,7 @@
 import DragonKit
 import SwiftUI
 
-/// Ice 2's own folder-based backup pane — **temporary, and on its way out.**
+/// missbar's own folder-based backup pane — **temporary, and on its way out.**
 ///
 /// DragonKit's `BackupSettingsPane` + `DragonBackup` is the target for every Dragon app. This
 /// pane and ClipMenu 2's `SyncBackupPane` are the two that have not migrated yet, because their
@@ -21,7 +21,7 @@ import SwiftUI
 /// as the mistake to avoid. What actually carries this pane is **§R9**, whose Backup slot
 /// recognizes the app-specific spelling and still holds it to the canonical sidebar position.
 ///
-/// Ice 2 keeps versioned backup files in a user-chosen folder so settings can sync across Macs;
+/// missbar keeps versioned backup files in a user-chosen folder so settings can sync across Macs;
 /// `DragonBackup` snapshots a single UserDefaults suite. The migration adds that capability once,
 /// in the kit — it is not preserved here.
 struct IceBackupSettingsPane: View {

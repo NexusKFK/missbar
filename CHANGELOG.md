@@ -1,5 +1,44 @@
 # Changelog
 
+## Fork: missbar — 2026-09-21
+
+missbar forks [teddychan/ice-2](https://github.com/teddychan/ice-2) at 2.16.0. Everything below
+this section is Ice 2's history, left intact — it is where the engineering actually happened.
+
+The fork changes identity and distribution, not behaviour:
+
+### Changed
+
+- **Renamed to missbar**, with bundle identifier `com.nexuskfk.missbar`, so it installs beside
+  Ice or Ice 2 without either clobbering the other's preferences, control items or saved state.
+  Backups now land in `~/Documents/missbar Backups` as `missbar-Settings-*.icebackup`; the
+  `.icebackup` extension is unchanged, so backups stay interchangeable with Ice 2.
+- **`Constants.releaseBundleIdentifier` follows the rename.** It is how the app recognises its
+  own other build, so that applying a menu bar spacing offset — which quits and relaunches every
+  app owning a menu bar item — skips itself. Left on Ice 2's identifier, missbar would have
+  treated itself as a third-party app and terminated itself.
+- **About pane** points at this repo, and its copyright line names the whole chain (Jordan Baird,
+  Teddy Chan, missbar contributors) as GPL-3.0 §4 requires. Third-party notices moved from
+  `dragonapp.com/ice-2/licenses/` to `THIRD-PARTY-LICENSES.md` in this repo.
+
+### Fixed
+
+- **The update feed no longer points at Ice 2.** `SUFeedURL` was inherited pointing at ice-2's
+  appcast, so the first background check would have downloaded an Ice 2 release and replaced
+  missbar with it. It now points at an empty appcast in this repo. `SUPublicEDKey` was removed
+  with it — that was Ice 2's release keypair.
+- **The uninstaller no longer issues Ice 2's Homebrew cask token.** missbar is not distributed
+  through Homebrew. Inherited unchanged, its teardown would have run
+  `brew uninstall --cask --force ice-2`, which is not bundle-scoped and would have quit and
+  deleted a different app installed beside it.
+
+### Removed
+
+- Upstream's release pipeline, which needs Developer ID and notarization credentials this fork
+  does not have, along with the DragonKit conformance workflow, Homebrew tap wiring and internal
+  planning docs. Replaced by `.github/workflows/build.yml`, which produces an ad-hoc signed,
+  unsigned-for-Gatekeeper build. The lint and test workflows are kept unchanged.
+
 ## 2.16.0 - 2026-09-18
 
 ### Added

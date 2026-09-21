@@ -10,7 +10,7 @@ enum SettingsNavigationIdentifier: String, NavigationIdentifier {
     // Sidebar order follows the shared Dragon convention (see dragon-kit README):
     // General → the app's own panes → Permissions → Sync & Backup → What's New →
     // Updates → About → Uninstall. Uninstall is last because it is destructive and
-    // rarely used; it is also Ice 2's only in-app uninstall route, since DragonKit 2.0.0
+    // rarely used; it is also missbar's only in-app uninstall route, since DragonKit 2.0.0
     // dropped Uninstall from the canonical menu-bar dropdown.
     case general = "General"
     case appearance = "Appearance"
@@ -40,10 +40,10 @@ enum SettingsNavigationIdentifier: String, NavigationIdentifier {
     static let rendersMenuBarItemImages = Self.layout
 
     /// The sidebar label. Every canonical slot reuses DragonKit's own `DragonKit.pane.*` key
-    /// rather than an app copy — including Backup, whose pane is Ice 2's but whose slot the kit
+    /// rather than an app copy — including Backup, whose pane is missbar's but whose slot the kit
     /// names. §R8 makes an app key beginning `DragonKit.` a violation, and the module bundle wins
     /// the lookup anyway, so a duplicate would be dead weight that merely looks authoritative.
-    /// Only Ice 2's own five panes carry `app.` keys.
+    /// Only missbar's own five panes carry `app.` keys.
     var localized: String {
         switch self {
         case .general: L("app.nav.general")

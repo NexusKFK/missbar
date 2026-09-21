@@ -10,7 +10,7 @@ import Testing
 
 /// Runs `body` with the app pinned to English, then restores the previous selection.
 ///
-/// Every display string in Ice 2 now resolves through DragonKit's `L(_:)`, which reads
+/// Every display string in missbar now resolves through DragonKit's `L(_:)`, which reads
 /// ``LocalizationManager``. Its default is `.system`, i.e. `Bundle.main.preferredLocalizations`
 /// — and the test host is a real `.app` shipping all seven locales, so the tests that pin exact
 /// wording would return Spanish on a Spanish Mac and fail there while passing on every English
@@ -42,7 +42,7 @@ func withEnglish<T>(_ body: () throws -> T) rethrows -> T {
 /// synchronized group, with nothing in `project.pbxproj` naming them individually.
 @MainActor
 struct LocalizationCoverageTests {
-    /// Every language Ice 2 ships, which §R13 requires to equal what `LanguagePicker` offers.
+    /// Every language missbar ships, which §R13 requires to equal what `LanguagePicker` offers.
     private static let shipped = DragonLanguage.selectable
 
     private func table(_ language: DragonLanguage) throws -> [String: String] {

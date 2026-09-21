@@ -19,12 +19,12 @@ enum Constants {
     /// The bundle identifier of the installed release, which the local debug build extends with
     /// `.debug`. The *running* build's id is ``bundleIdentifier`` — this one names the other end
     /// of that pair, so use it only to ask which build is which.
-    static let releaseBundleIdentifier = "com.dragonapp.ice"
+    static let releaseBundleIdentifier = "com.nexuskfk.missbar"
 
-    /// Whether `bundleID` belongs to any build of Ice 2 — the installed release or a `.debug`
+    /// Whether `bundleID` belongs to any build of missbar — the installed release or a `.debug`
     /// build running beside it.
     ///
-    /// Ice 2 acts on other running applications in several places: it quits and relaunches every
+    /// missbar acts on other running applications in several places: it quits and relaunches every
     /// app with a menu bar item to apply a spacing offset, and it offers the frontmost app as a
     /// section trigger. Each of those treated the *other* Ice build as an unrelated third-party
     /// app, so applying a spacing offset in the debug build terminated the installed release —

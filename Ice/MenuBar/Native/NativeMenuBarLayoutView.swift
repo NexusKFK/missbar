@@ -9,7 +9,7 @@ import UniformTypeIdentifiers
 
 /// A private payload prevents unrelated text or files from changing assignments.
 enum NativeMenuBarDrag {
-    static let type = UTType(exportedAs: "com.dragonapp.ice.section-assignment", conformingTo: .data)
+    static let type = UTType(exportedAs: "com.nexuskfk.missbar.section-assignment", conformingTo: .data)
 }
 
 struct NativeMenuBarLayoutView: View {

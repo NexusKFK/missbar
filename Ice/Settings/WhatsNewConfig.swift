@@ -5,7 +5,7 @@
 
 import DragonKit
 
-/// App-owned "What's New" content for Ice 2, rendered by DragonKit's ``WhatsNewPane``.
+/// App-owned "What's New" content for missbar, rendered by DragonKit's ``WhatsNewPane``.
 ///
 /// Only the app's own content lives here — the layout is owned by DragonKit. The version is not
 /// passed at all: ``WhatsNewContent`` reads `CFBundleShortVersionString` itself and renders it

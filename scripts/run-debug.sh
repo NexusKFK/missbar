@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 #
-# run-debug.sh — build Ice and (re)launch the Debug product as "Ice 2 Debug".
+# run-debug.sh — build Ice and (re)launch the Debug product as "missbar Debug".
 #
 # Why: a debug build must not share the installed app's bundle id
-# (com.dragonapp.ice), which collides on TCC permissions, the menu-bar manager,
+# (com.nexuskfk.missbar), which collides on TCC permissions, the menu-bar manager,
 # and the UserDefaults domain. The Debug configuration handles that itself: it
-# sets PRODUCT_BUNDLE_IDENTIFIER to com.dragonapp.ice.debug and the display name
-# to "Ice 2 Debug", so the built product is already the isolated app and
+# sets PRODUCT_BUNDLE_IDENTIFIER to com.nexuskfk.missbar.debug and the display name
+# to "missbar Debug", so the built product is already the isolated app and
 # `xcodebuild test` gets the same isolation without going through this script.
 #
 # This script therefore builds, stamps and launches — it deliberately does NOT
 # copy the product to a second bundle. An earlier version did, which left two
-# bundles claiming com.dragonapp.ice.debug in every DerivedData folder;
+# bundles claiming com.nexuskfk.missbar.debug in every DerivedData folder;
 # LaunchServices then resolved that id ambiguously and could launch a stale build
 # instead of the one just built. One bundle per checkout, one id.
 #
-# PRODUCT_NAME is "Ice 2 Debug" in the Debug configuration, so the bundle on disk,
-# its executable, CFBundleName and CFBundleDisplayName all read "Ice 2 Debug" —
-# there is nowhere left for the name "Ice 2" to appear on a debug build.
+# PRODUCT_NAME is "missbar Debug" in the Debug configuration, so the bundle on disk,
+# its executable, CFBundleName and CFBundleDisplayName all read "missbar Debug" —
+# there is nowhere left for the name "missbar" to appear on a debug build.
 # PRODUCT_MODULE_NAME is pinned to Ice_2 so the Swift module keeps the name
 # IceTests imports; TEST_HOST points at the Debug product by its own name.
 #
@@ -47,8 +47,8 @@ set -euo pipefail
 
 SCHEME="Ice"
 CONFIG="Debug"
-DEBUG_ID="com.dragonapp.ice.debug"
-DEBUG_NAME="Ice 2 Debug"
+DEBUG_ID="com.nexuskfk.missbar.debug"
+DEBUG_NAME="missbar Debug"
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$repo_root"
@@ -139,7 +139,7 @@ echo "==> Re-signing after stamping Debug channel, v$short_version ($build_numbe
 codesign --force --deep --sign - "$app" >/dev/null 2>&1
 
 # Launched by exec rather than `open` on purpose. Older builds of this repo left
-# stray "Ice 2 Debug.app" copies in other DerivedData folders that still claim
+# stray "missbar Debug.app" copies in other DerivedData folders that still claim
 # this bundle id, and LaunchServices resolves an ambiguous id to whichever copy
 # it likes — including a stale one. Exec'ing the binary runs exactly this build.
 echo "==> Launching $app"
@@ -154,7 +154,7 @@ Launched "$DEBUG_NAME" v$short_version Debug (build $build_number), id $DEBUG_ID
 - v$short_version is the numeric candidate for the next public release; "Debug" is the
   build channel, not part of the version.
 - Grant Accessibility / Screen Recording to "$DEBUG_NAME" in its Permissions
-  window if you want full functionality (separate from your installed Ice 2).
+  window if you want full functionality (separate from your installed missbar).
 - Ad-hoc signature changes each rebuild, so macOS may ask you to re-grant.
 - Updating is disabled in this build: no scheduled checks, no Check for Updates…
   item in the menu, and no production feed in the bundle.

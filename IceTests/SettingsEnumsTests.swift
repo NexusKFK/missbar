@@ -37,7 +37,7 @@ struct SettingsEnumsTests {
         withEnglish {
             #expect(IceBarLocation.dynamic.localized == "Dynamic")
             #expect(IceBarLocation.mousePointer.localized == "Mouse pointer")
-            #expect(IceBarLocation.iceIcon.localized == "Ice 2 icon")
+            #expect(IceBarLocation.iceIcon.localized == "missbar icon")
         }
     }
 

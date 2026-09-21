@@ -15,7 +15,7 @@ struct GeneralSettingsPane: View {
     /// change made in System Settings shows up here.
     @State private var launchesAtLogin = LoginItem.isEnabled
 
-    /// A single toggle backing both hover-to-show triggers (empty menu bar and Ice 2 icon).
+    /// A single toggle backing both hover-to-show triggers (empty menu bar and missbar icon).
     private var showOnHover: Binding<Bool> {
         Binding(
             get: { settings.showOnHoverEmptyMenuBar || settings.showOnHoverOverIceIcon },
@@ -82,10 +82,10 @@ struct GeneralSettingsPane: View {
     /// Launch at login, via DragonKit's `LoginItem` — the single code path every Dragon app
     /// (and the shared uninstall flow) uses to drive `SMAppService.mainApp`.
     ///
-    /// The language picker is DragonKit's `LanguagePicker`, called bare: Ice 2 ships every
+    /// The language picker is DragonKit's `LanguagePicker`, called bare: missbar ships every
     /// locale the kit does, and CONFORMANCE.md §R13 requires the offered set to equal the
     /// shipped set exactly, so the kit's default of `DragonLanguage.selectable` is the correct
-    /// list. `onChange` is left `nil` — Ice 2 resolves its own strings through `L(_:)` and the
+    /// list. `onChange` is left `nil` — missbar resolves its own strings through `L(_:)` and the
     /// settings window is wrapped in `.dragonLocalized()`, so the switch happens in place with
     /// no relaunch.
     @ViewBuilder
