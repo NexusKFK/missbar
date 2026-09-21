@@ -40,6 +40,22 @@ install an update it cannot verify against a key we do not hold. Publishing real
 Sparkle would mean generating an EdDSA keypair, putting the public half back in `Info.plist`,
 and signing each release. Installing by hand from the Releases page avoids all of it.
 
+## Why the build carries an entitlement
+
+`App/missbar.entitlements` disables library validation, and the build does not work without it.
+
+The target enables the hardened runtime, which restricts a process to loading libraries signed
+with its own Team ID. Ice 2's releases satisfy that because one Developer ID signs the app and
+everything embedded in it. An ad-hoc signature has no Team ID at all, so dyld refuses to load
+the app's own `Sparkle.framework` and the process dies before `main()`.
+
+`codesign --verify --deep --strict` does not catch it — it verifies that each nested component
+is validly signed, not that their Team IDs agree — so the build verifies clean and fails the
+first time anyone runs it. The smoke step in `build.yml` loads the binary for exactly this
+reason, and asserts the entitlement survived into the signed bundle.
+
+Signing with a real Developer ID would make the entitlement unnecessary.
+
 ## Installing what you built
 
 The build is ad-hoc signed, so Gatekeeper quarantines the download and macOS treats every build

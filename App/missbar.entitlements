@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	  Required because this fork is ad-hoc signed rather than Developer ID-signed.
+
+	  The target enables the hardened runtime, which turns on library validation: a process may
+	  only load libraries signed by the same Team ID as its main binary, or platform binaries.
+	  Ice 2's own releases satisfy that because the app and its embedded frameworks are all
+	  signed with one Developer ID. An ad-hoc signature carries no Team ID at all, so
+	  Sparkle.framework fails the check and dyld refuses to load it:
+
+	      Library not loaded: @rpath/Sparkle.framework/Versions/B/Sparkle
+	      Reason: ... mapping process and mapped file (non-platform) have different Team IDs
+
+	  The app terminates at launch, before any of its own code runs.
+
+	  Note that `codesign --verify --deep --strict` does NOT catch this. It checks that each
+	  nested component carries a valid signature, not that the Team IDs agree, so the build
+	  verifies clean and then fails the first time it is actually run. `.github/workflows/build.yml`
+	  has a smoke step that loads the binary for this reason.
+
+	  If this app is ever signed with a real Developer ID, this entitlement can be dropped —
+	  every component would then share one Team ID.
+	-->
+	<key>com.apple.security.cs.disable-library-validation</key>
+	<true/>
+</dict>
+</plist>

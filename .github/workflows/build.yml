@@ -54,6 +54,39 @@ jobs:
           /usr/bin/defaults read "$PWD/$APP/Contents/Info.plist" CFBundleIdentifier
           /usr/bin/defaults read "$PWD/$APP/Contents/Info.plist" CFBundleShortVersionString
 
+      # The check above is not enough on its own, and this is not a hypothetical: an ad-hoc
+      # signature carries no Team ID, the hardened runtime enables library validation, and dyld
+      # then refuses to load the app's own embedded Sparkle.framework. `codesign --verify --deep`
+      # passes anyway — it checks that each nested component is validly signed, not that their
+      # Team IDs agree — so the bundle verified clean and died the moment it was run.
+      #
+      # `App/missbar.entitlements` is the fix. Both halves are pinned here: that the entitlement
+      # survives into the signed bundle, and that dyld can actually load the binary.
+      - name: Smoke test (dyld can load the app)
+        run: |
+          APP="build/Build/Products/Release/missbar.app"
+
+          # `plutil -extract` is not usable here: it reads dots as key-path separators, so the
+          # entitlement's own name parses as six nested keys and the lookup always fails.
+          /usr/bin/codesign -d --entitlements - --xml "$APP" 2>/dev/null | tr -d '\n ' \
+            | grep -q '<key>com.apple.security.cs.disable-library-validation</key><true/>' \
+            || { echo "::error::disable-library-validation entitlement is missing; the app will not launch"; exit 1; }
+
+          # Then actually load it. dyld resolves and signature-checks every embedded framework
+          # before main() runs, which is exactly where the failure this guards against happens,
+          # so a few seconds of runtime is enough to prove it. The app is LSUIElement and keeps
+          # running when it works, hence the kill; a broken build exits on its own immediately.
+          ( "$APP/Contents/MacOS/missbar" >dyld.log 2>&1 & echo $! >app.pid )
+          sleep 8
+          kill -9 "$(cat app.pid)" 2>/dev/null || true
+
+          if grep -qE "Library not loaded|different Team IDs|code signature.*not valid" dyld.log; then
+            echo "::error::the app cannot load its own frameworks"
+            grep -E "Library not loaded|Reason:" dyld.log | head -3
+            exit 1
+          fi
+          echo "app loaded and stayed up for 8s with no framework load error"
+
       # ditto, not `zip`: it is the only archiver that preserves the bundle's symlinks and
       # extended attributes, and a zip that loses them produces an app with a broken signature.
       - name: Package

@@ -42,6 +42,11 @@ Almost nothing about how the app works. The changes are identity and distributio
   treated itself as a third-party app.
 - **Builds unsigned in CI**, replacing the upstream release pipeline, which needs an Apple
   Developer ID certificate and notarization credentials this fork does not have.
+- **Disables library validation** (`App/missbar.entitlements`). The hardened runtime only lets a
+  process load libraries sharing its Team ID, and an ad-hoc signature has none — so dyld refused
+  to load the app's own bundled Sparkle.framework and it died at launch. Worth knowing that
+  `codesign --verify --deep --strict` passes on such a build: it checks that each component is
+  validly signed, not that the Team IDs agree. CI now loads the binary to catch this.
 
 Upstream's own release infrastructure (DragonKit conformance workflow, signed release workflow,
 Homebrew tap wiring, internal planning docs) is removed rather than left in place to fail.
