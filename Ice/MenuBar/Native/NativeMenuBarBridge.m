@@ -113,3 +113,42 @@ NSArray<NSDictionary<NSString *, NSString *> *> *ICENativeMenuBarSnapshot(void) 
     CFRelease(root);
     return items.allValues;
 }
+
+static BOOL ICEFrame(AXUIElementRef element, CGRect *frame) {
+    id position = ICEAttribute(element, kAXPositionAttribute);
+    id size = ICEAttribute(element, kAXSizeAttribute);
+    if (!position || !size) return NO;
+    CGPoint origin;
+    CGSize extent;
+    if (!AXValueGetValue((__bridge AXValueRef)position, kAXValueTypeCGPoint, &origin) ||
+        !AXValueGetValue((__bridge AXValueRef)size, kAXValueTypeCGSize, &extent)) {
+        return NO;
+    }
+    *frame = (CGRect){origin, extent};
+    return YES;
+}
+
+// On 27 the whole menu bar is one MenuBarAgent window per display, so the
+// per-item CGWindow list is empty. Each direct child of that window is the
+// host slot of one item (system extra or app status item) with a real frame.
+NSArray<NSValue *> *ICENativeMenuBarItemFrames(void) {
+    if (!AXIsProcessTrusted()) return @[];
+    NSRunningApplication *agent = [NSRunningApplication
+        runningApplicationsWithBundleIdentifier:@"com.apple.MenuBarAgent"].firstObject;
+    if (!agent) return @[];
+    AXUIElementRef root = AXUIElementCreateApplication(agent.processIdentifier);
+    AXUIElementSetMessagingTimeout(root, 0.05);
+    NSMutableArray<NSValue *> *frames = [NSMutableArray array];
+    for (id window in ICEChildren(root)) {
+        AXUIElementRef element = (__bridge AXUIElementRef)window;
+        if (![ICEAttribute(element, kAXRoleAttribute) isEqual:@"AXWindow"]) continue;
+        for (id slot in ICEChildren(element)) {
+            CGRect frame;
+            if (ICEFrame((__bridge AXUIElementRef)slot, &frame) && frame.size.width > 0 && frame.size.height > 0) {
+                [frames addObject:[NSValue valueWithRect:NSRectFromCGRect(frame)]];
+            }
+        }
+    }
+    CFRelease(root);
+    return frames;
+}

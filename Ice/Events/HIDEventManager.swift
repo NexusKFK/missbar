@@ -21,6 +21,9 @@ final class HIDEventManager: ObservableObject {
     /// Storage for internal observers.
     private var cancellables = Set<AnyCancellable>()
 
+    /// Last native backend item frames, see ``nativeMenuBarItemFrames()``.
+    private var cachedNativeItemFrames: (date: Date, frames: [CGRect])?
+
     /// History of the manager's enabled states.
     private var enabledStateStack = [Bool]()
 
@@ -625,6 +628,12 @@ extension HIDEventManager {
         guard let mouseLocation = MouseHelpers.locationCoreGraphics else {
             return false
         }
+        if NativeMenuBarManager.usesNativeBackend {
+            // 27 draws every item inside one MenuBarAgent window, so the
+            // per-item window list below is always empty and every click on
+            // an item would look like empty space.
+            return nativeMenuBarItemFrames().contains { $0.contains(mouseLocation) }
+        }
         let windowIDs = Bridging.getMenuBarWindowList(option: [.onScreen, .activeSpace, .itemsOnly])
         return windowIDs.contains { windowID in
             guard let bounds = Bridging.getWindowBounds(for: windowID) else {
@@ -632,6 +641,18 @@ extension HIDEventManager {
             }
             return bounds.contains(mouseLocation)
         }
+    }
+
+    /// Item slot frames from the native backend, cached briefly because
+    /// hover tracking can ask on every pointer movement.
+    private func nativeMenuBarItemFrames() -> [CGRect] {
+        let now = Date.now
+        if let cached = cachedNativeItemFrames, now.timeIntervalSince(cached.date) < 0.5 {
+            return cached.frames
+        }
+        let frames = ICENativeMenuBarItemFrames().map(\.rectValue)
+        cachedNativeItemFrames = (now, frames)
+        return frames
     }
 
     /// A Boolean value that indicates whether the mouse pointer is within
