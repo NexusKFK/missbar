@@ -193,6 +193,31 @@ final class MenuBarManager: ObservableObject {
                     }
 
                     Task {
+                        if NativeMenuBarManager.usesNativeBackend {
+                            // 27 has no per-item windows, so getMenuBarItems is always
+                            // empty. Revealed items are laid out by the menu bar agent
+                            // asynchronously; give it a moment, then read the slots.
+                            try? await Task.sleep(for: .milliseconds(300))
+                            guard self.sections.contains(where: { $0.controlItem.state == .showSection }) else {
+                                return
+                            }
+                            let displayBounds = CGDisplayBounds(screen.displayID)
+                            // Accessibility reports the app menus of the active menu bar
+                            // only; on another display the frame belongs to that display.
+                            guard displayBounds.intersects(applicationMenuFrame) else {
+                                return
+                            }
+                            let leftmostMinX = ICENativeMenuBarItemFrames()
+                                .map(\.rectValue)
+                                .filter { displayBounds.intersects($0) }
+                                .map(\.minX)
+                                .min()
+                            if let leftmostMinX, leftmostMinX <= applicationMenuFrame.maxX {
+                                self.hideApplicationMenus()
+                            }
+                            return
+                        }
+
                         // Get all items.
                         var items = await MenuBarItem.getMenuBarItems(on: screen.displayID, option: .activeSpace)
 
