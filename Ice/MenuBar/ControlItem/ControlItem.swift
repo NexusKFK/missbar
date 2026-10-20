@@ -388,7 +388,16 @@ final class ControlItem {
                     }
                 }
             case .hideSection:
-                updateStatusItemVisibility(true)
+                if NativeMenuBarManager.usesNativeBackend,
+                   appState.settings.advanced.sectionDividerStyle == .noDivider
+                {
+                    // The native backend never expands the item to hide others, so with no
+                    // divider style there is nothing to draw: collapse it instead of leaving
+                    // an empty slot in the menu bar.
+                    updateStatusItemVisibility(false)
+                } else {
+                    updateStatusItemVisibility(true)
+                }
                 button.appearsDisabled = true
                 button.isHighlighted = false
             }
