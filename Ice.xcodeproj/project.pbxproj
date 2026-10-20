@@ -34,6 +34,7 @@
 		883544A1BDB23DEB15E409B2 /* MenuBarLayoutProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5B2BD6986E421B6263F2D3 /* MenuBarLayoutProfileTests.swift */; };
 		91967593C089C4EA20BA497D /* SharedExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF2282483FF8E16A487D9C3 /* SharedExtensionsTests.swift */; };
 		95AE1A0B775C85363C4404DC /* SettingsEnumsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E9DDFB62D4FA07946CC797 /* SettingsEnumsTests.swift */; };
+		A1B2C3D4E5F6A7B8C9D0E1F2 /* MenuBarSpacerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E1D0C9B8A7F6E5D4C3B2A1 /* MenuBarSpacerTests.swift */; };
 		986A47EC7057DE6842643937 /* SettingsBackupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12990E4E70C4107E87D970D7 /* SettingsBackupTests.swift */; };
 		B1C4E7A20D53F8916AE2C094 /* ScratchDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70E2C41B96D5387F04A1DE3 /* ScratchDefaults.swift */; };
 		A1B2C3D40000000000000002 /* LocalizedTextSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000001 /* LocalizedTextSupport.swift */; };
@@ -119,6 +120,7 @@
 		CEC00E31681F07866FE98D6B /* HotkeyActionTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HotkeyActionTests.swift; sourceTree = "<group>"; };
 		D5D9FF7076B412B16B603C8C /* KeyCombinationTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KeyCombinationTests.swift; sourceTree = "<group>"; };
 		E7E9DDFB62D4FA07946CC797 /* SettingsEnumsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsEnumsTests.swift; sourceTree = "<group>"; };
+		F2E1D0C9B8A7F6E5D4C3B2A1 /* MenuBarSpacerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MenuBarSpacerTests.swift; sourceTree = "<group>"; };
 		EF413CD9CC7D016105A22EF0 /* WindowInfoTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WindowInfoTests.swift; sourceTree = "<group>"; };
 		F29224478E4DA927C88733C8 /* ExtensionsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExtensionsTests.swift; sourceTree = "<group>"; };
 		F6B207F953D5E17989C6C3B5 /* HotkeyTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HotkeyTests.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				F29224478E4DA927C88733C8 /* ExtensionsTests.swift */,
 				3DD2B847F99761CDED955A3A /* AppearanceConfigTests.swift */,
 				E7E9DDFB62D4FA07946CC797 /* SettingsEnumsTests.swift */,
+				F2E1D0C9B8A7F6E5D4C3B2A1 /* MenuBarSpacerTests.swift */,
 				943118A230952141233F87D3 /* MenuBarTriggerTests.swift */,
 				2D3EE3A5FEDD60DB5B5DF93F /* UtilityHelpersTests.swift */,
 				F6B207F953D5E17989C6C3B5 /* HotkeyTests.swift */,
@@ -480,6 +483,7 @@
 				DFBC7C32FBD412329442365B /* ExtensionsTests.swift in Sources */,
 				50F5DAA3F785CC10CAC28750 /* AppearanceConfigTests.swift in Sources */,
 				95AE1A0B775C85363C4404DC /* SettingsEnumsTests.swift in Sources */,
+				A1B2C3D4E5F6A7B8C9D0E1F2 /* MenuBarSpacerTests.swift in Sources */,
 				298CE54C9B0BE7DB32C3D2C3 /* MenuBarTriggerTests.swift in Sources */,
 				12863111709580A862D997E4 /* UtilityHelpersTests.swift in Sources */,
 				83DC40FE39537ACCA4890A12 /* HotkeyTests.swift in Sources */,
