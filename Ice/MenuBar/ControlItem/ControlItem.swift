@@ -155,8 +155,16 @@ final class ControlItem {
     /// A Boolean value that indicates whether the control item is currently
     /// displayed in the menu bar.
     var isAddedToMenuBar: Bool {
-        statusItem.isVisible
+        statusItem.isVisible || isSuppressedByDividerStyle
     }
+
+    /// A Boolean value that indicates whether the status item is removed from the
+    /// menu bar only because no divider style is set (native backend).
+    ///
+    /// A zero-length status item still keeps a blank slot on some displays, so the
+    /// native backend removes the item entirely. The section stays enabled, as the
+    /// native backend does not use the item's position to find items in a section.
+    private var isSuppressedByDividerStyle = false
 
     /// The corresponding section name for the control item.
     var sectionName: MenuBarSection.Name {
@@ -200,7 +208,7 @@ final class ControlItem {
                 else {
                     return
                 }
-                if isVisible {
+                if isVisible || isSuppressedByDividerStyle {
                     hotkey.enable()
                 } else {
                     hotkey.disable()
@@ -383,7 +391,15 @@ final class ControlItem {
 
     /// Draws the section divider for the current divider style.
     private func applyDividerStyle(to button: NSStatusBarButton, appState: AppState, isDimmed: Bool) {
+        let native = NativeMenuBarManager.usesNativeBackend
+        if native {
+            let hasDivider = appState.settings.advanced.sectionDividerStyle != .noDivider
+            setSuppressedByDividerStyle(!hasDivider, appState: appState)
+        }
         switch appState.settings.advanced.sectionDividerStyle {
+        case .noDivider where native:
+            button.appearsDisabled = true
+            button.isHighlighted = false
         case .noDivider:
             updateStatusItemVisibility(false)
             button.appearsDisabled = true
@@ -455,12 +471,33 @@ final class ControlItem {
         }
     }
 
+    /// Removes or restores the status item for the native backend's divider style.
+    private func setSuppressedByDividerStyle(_ suppressed: Bool, appState: AppState) {
+        guard suppressed != isSuppressedByDividerStyle else {
+            return
+        }
+        if suppressed {
+            guard statusItem.isVisible else {
+                // Already removed, as the section is disabled.
+                return
+            }
+            isSuppressedByDividerStyle = true
+            hideStatusItemKeepingPosition()
+        } else {
+            isSuppressedByDividerStyle = false
+            if identifier != .alwaysHidden || appState.settings.advanced.enableAlwaysHiddenSection {
+                statusItem.isVisible = true
+            }
+        }
+    }
+
     /// Adds the control item to the menu bar.
     private func addToMenuBar() {
         guard !isAddedToMenuBar else {
             return
         }
         statusItem.isVisible = true
+        updateStatusItem()
     }
 
     /// Removes the control item from the menu bar.
@@ -468,6 +505,11 @@ final class ControlItem {
         guard isAddedToMenuBar else {
             return
         }
+        isSuppressedByDividerStyle = false
+        hideStatusItemKeepingPosition()
+    }
+
+    private func hideStatusItemKeepingPosition() {
         // Setting `statusItem.isVisible` to `false` has the unwanted side
         // effect of deleting the preferred position. Cache and restore it.
         let autosaveName = statusItem.autosaveName as String
