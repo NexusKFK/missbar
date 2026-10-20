@@ -15,7 +15,6 @@
 "app.advanced.addCurrentApp" = "加入目前 App";
 "app.advanced.dividerStyle" = "區段分隔線樣式";
 "app.advanced.dividerStyle.chevron" = "尖角";
-"app.advanced.dividerStyle.line" = "豎線";
 "app.advanced.enableAlwaysHidden" = "啟用「總是隱藏」區段";
 "app.advanced.hideAppMenus" = "顯示選單列項目時隱藏 App 選單";
 "app.advanced.hideAppMenus.note" = "在需要時隱藏目前 App 的選單，為選單列騰出空間。此設定生效期間，macOS 要求 missbar 在 Dock 中顯示自身。";
@@ -164,7 +163,7 @@
 "app.icon.ellipsis" = "刪節號";
 "app.icon.iceCube" = "冰塊";
 "app.icon.sunglasses" = "太陽眼鏡";
-"app.layout.addSpacer" = "加入間隔符";
+"app.layout.addSpacer" = "加入分隔符";
 "app.layout.alert.notEnoughRoom.title" = "沒有足夠空間顯示「%@」";
 "app.layout.alert.notMovable.message" = "macOS 不允許移動「%@」。";
 "app.layout.alert.notMovable.title" = "該選單列項目無法移動。";
@@ -183,9 +182,17 @@
 "app.layout.restoreIceIcon" = "回復 missbar 圖像";
 "app.layout.saveCurrent" = "儲存目前版面";
 "app.layout.section.profiles" = "描述檔";
-"app.layout.section.spacers" = "間隔符";
-"app.layout.spacerName" = "間隔符 %d";
-"app.layout.spacers.note" = "在選單列項目之間加入彈性間距。";
+"app.layout.section.spacers" = "分隔符";
+"app.layout.spacerName" = "分隔符 %d";
+"app.layout.spacer.style" = "樣式";
+"app.layout.spacer.style.blank" = "空白";
+"app.layout.spacer.style.line" = "豎線";
+"app.layout.spacer.style.text" = "文字";
+"app.layout.spacer.width" = "寬度";
+"app.layout.spacer.thickness" = "粗細";
+"app.layout.spacer.textPlaceholder" = "文字或 emoji";
+"app.layout.spacer.openSettings" = "分隔符設定…";
+"app.layout.spacers.note" = "用豎線、空白或文字分隔選單列圖示。按住 ⌘ 拖移分隔符來擺放位置；按一下分隔符可以修改或刪除。";
 "app.layout.updateProfile" = "更新";
 "app.menu.editAppearance" = "編輯選單列外觀…";
 "app.menu.hideSection" = "隱藏%@區段";

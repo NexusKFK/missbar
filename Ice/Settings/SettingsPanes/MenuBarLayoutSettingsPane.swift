@@ -32,6 +32,7 @@ struct MenuBarLayoutSettingsPane: View {
         if NativeMenuBarManager.usesNativeBackend {
             DragonForm {
                 NativeMenuBarLayoutView(manager: nativeManager)
+                spacers
                 profiles
             }
         } else if !ScreenCapture.cachedCheckPermissions() {
@@ -220,25 +221,77 @@ struct MenuBarLayoutSettingsPane: View {
 
     @ViewBuilder
     private func spacerRow(_ spacer: MenuBarSpacer) -> some View {
-        HStack {
-            Text(spacer.name)
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Text(spacer.name)
 
-            Slider(
-                value: Binding(
-                    get: { spacer.width },
-                    set: { spacerManager.setWidth($0, for: spacer) }
-                ),
-                in: 8...80,
-                step: 1
-            )
+                Picker(
+                    L("app.layout.spacer.style"),
+                    selection: Binding(
+                        get: { spacer.style },
+                        set: { spacerManager.setStyle($0, for: spacer) }
+                    )
+                ) {
+                    ForEach(MenuBarSpacer.Style.allCases) { style in
+                        Text(style.localized).tag(style)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .labelsHidden()
+                .fixedSize()
 
-            Text(String(format: L("app.layout.points"), Int(spacer.width)))
-                .monospacedDigit()
-                .foregroundStyle(.secondary)
-                .frame(width: 42, alignment: .trailing)
+                Spacer()
 
-            Button(L("app.common.delete"), role: .destructive) {
-                spacerManager.deleteSpacer(spacer)
+                Button(L("app.common.delete"), role: .destructive) {
+                    spacerManager.deleteSpacer(spacer)
+                }
+            }
+
+            switch spacer.style {
+            case .blank, .line:
+                HStack {
+                    Text(L("app.layout.spacer.width"))
+                        .foregroundStyle(.secondary)
+
+                    Slider(
+                        value: Binding(
+                            get: { spacer.width },
+                            set: { spacerManager.setWidth($0, for: spacer) }
+                        ),
+                        in: MenuBarSpacer.widthRange,
+                        step: 1
+                    )
+
+                    Text(String(format: L("app.layout.points"), Int(spacer.width)))
+                        .monospacedDigit()
+                        .foregroundStyle(.secondary)
+                        .frame(width: 42, alignment: .trailing)
+                }
+                if spacer.style == .line {
+                    Stepper(
+                        value: Binding(
+                            get: { spacer.thickness },
+                            set: { spacerManager.setThickness($0, for: spacer) }
+                        ),
+                        in: MenuBarSpacer.thicknessRange,
+                        step: 1
+                    ) {
+                        Text(L("app.layout.spacer.thickness"))
+                            .foregroundStyle(.secondary)
+                        Text(String(format: L("app.layout.points"), Int(spacer.thickness)))
+                            .monospacedDigit()
+                    }
+                }
+            case .text:
+                TextField(
+                    L("app.layout.spacer.textPlaceholder"),
+                    text: Binding(
+                        get: { spacer.text },
+                        set: { spacerManager.setText($0, for: spacer) }
+                    )
+                )
+                .textFieldStyle(.roundedBorder)
+                .frame(maxWidth: 200)
             }
         }
     }

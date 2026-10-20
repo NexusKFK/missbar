@@ -15,7 +15,6 @@
 "app.advanced.addCurrentApp" = "現在の App を追加";
 "app.advanced.dividerStyle" = "セクション区切りのスタイル";
 "app.advanced.dividerStyle.chevron" = "山形";
-"app.advanced.dividerStyle.line" = "線";
 "app.advanced.enableAlwaysHidden" = "常に非表示のセクションを有効にする";
 "app.advanced.hideAppMenus" = "メニューバー項目の表示時に App のメニューを隠す";
 "app.advanced.hideAppMenus.note" = "必要に応じて現在の App のメニューを隠し、メニューバーの空きを増やします。この設定が有効な間、macOS は missbar を Dock に表示することを求めます。";
@@ -164,7 +163,7 @@
 "app.icon.ellipsis" = "省略記号";
 "app.icon.iceCube" = "アイスキューブ";
 "app.icon.sunglasses" = "サングラス";
-"app.layout.addSpacer" = "スペーサを追加";
+"app.layout.addSpacer" = "区切りを追加";
 "app.layout.alert.notEnoughRoom.title" = "「%@」を表示する空きがありません";
 "app.layout.alert.notMovable.message" = "macOS は「%@」の移動を許可していません。";
 "app.layout.alert.notMovable.title" = "このメニューバー項目は移動できません。";
@@ -183,9 +182,17 @@
 "app.layout.restoreIceIcon" = "missbar アイコンを復元";
 "app.layout.saveCurrent" = "現在のレイアウトを保存";
 "app.layout.section.profiles" = "プロファイル";
-"app.layout.section.spacers" = "スペーサ";
-"app.layout.spacerName" = "スペーサ %d";
-"app.layout.spacers.note" = "メニューバー項目の間に可変スペースを追加します。";
+"app.layout.section.spacers" = "区切り";
+"app.layout.spacerName" = "区切り %d";
+"app.layout.spacer.style" = "スタイル";
+"app.layout.spacer.style.blank" = "空白";
+"app.layout.spacer.style.line" = "線";
+"app.layout.spacer.style.text" = "テキスト";
+"app.layout.spacer.width" = "幅";
+"app.layout.spacer.thickness" = "太さ";
+"app.layout.spacer.textPlaceholder" = "テキストまたは絵文字";
+"app.layout.spacer.openSettings" = "区切りの設定…";
+"app.layout.spacers.note" = "線、空白、テキストでメニューバー項目を区切ります。⌘ を押しながら区切りをドラッグして配置し、クリックすると変更や削除ができます。";
 "app.layout.updateProfile" = "更新";
 "app.menu.editAppearance" = "メニューバーの外観を編集…";
 "app.menu.hideSection" = "%@ セクションを非表示";

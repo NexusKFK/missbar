@@ -117,7 +117,6 @@ final class AdvancedSettings: ObservableObject {
 enum SectionDividerStyle: Int, CaseIterable, Identifiable {
     case noDivider = 0
     case chevron = 1
-    case line = 2
 
     var id: Int { rawValue }
 
@@ -126,7 +125,6 @@ enum SectionDividerStyle: Int, CaseIterable, Identifiable {
         switch self {
         case .noDivider: L("app.common.none")
         case .chevron: L("app.advanced.dividerStyle.chevron")
-        case .line: L("app.advanced.dividerStyle.line")
         }
     }
 }

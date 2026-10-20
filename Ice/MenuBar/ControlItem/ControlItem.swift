@@ -155,16 +155,16 @@ final class ControlItem {
     /// A Boolean value that indicates whether the control item is currently
     /// displayed in the menu bar.
     var isAddedToMenuBar: Bool {
-        statusItem.isVisible || isSuppressedByDividerStyle
+        statusItem.isVisible || isSuppressedOnNativeBackend
     }
 
-    /// A Boolean value that indicates whether the status item is removed from the
-    /// menu bar only because no divider style is set (native backend).
+    /// A Boolean value that indicates whether the section divider is kept out of the
+    /// menu bar while its section stays enabled.
     ///
-    /// A zero-length status item still keeps a blank slot on some displays, so the
-    /// native backend removes the item entirely. The section stays enabled, as the
-    /// native backend does not use the item's position to find items in a section.
-    private var isSuppressedByDividerStyle = false
+    /// On the native backend, sections are assigned per app, so a divider marks nothing
+    /// and only leaves a blank slot (a zero-length item still takes 16pt on secondary
+    /// displays). Users who want visual separation add separators (spacers) instead.
+    @Published private var isSuppressedOnNativeBackend = false
 
     /// The corresponding section name for the control item.
     var sectionName: MenuBarSection.Name {
@@ -198,6 +198,9 @@ final class ControlItem {
             .store(in: &c)
 
         statusItem.publisher(for: \.isVisible)
+            .combineLatest($isSuppressedOnNativeBackend)
+            .map { $0 || $1 }
+            .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isVisible in
                 guard
@@ -208,7 +211,7 @@ final class ControlItem {
                 else {
                     return
                 }
-                if isVisible || isSuppressedByDividerStyle {
+                if isVisible {
                     hotkey.enable()
                 } else {
                     hotkey.disable()
@@ -372,15 +375,33 @@ final class ControlItem {
             button.image = image
         case .hidden, .alwaysHidden:
             if NativeMenuBarManager.usesNativeBackend {
-                // The native backend never expands the item to hide others, so the divider
-                // is purely a visual marker and looks the same in both states. Without a
-                // divider style, collapse the item instead of leaving an empty slot.
-                applyDividerStyle(to: button, appState: appState, isDimmed: state == .hideSection)
+                suppressOnNativeBackend(appState: appState)
                 return
             }
             switch state {
             case .showSection:
-                applyDividerStyle(to: button, appState: appState, isDimmed: false)
+                switch appState.settings.advanced.sectionDividerStyle {
+                case .noDivider:
+                    updateStatusItemVisibility(false)
+                    button.appearsDisabled = true
+                    button.isHighlighted = false
+
+                    if appState.isDraggingMenuBarItem && appState.settings.advanced.showAllSectionsOnUserDrag {
+                        // We still want a subtle marker between sections.
+                        button.title = "|"
+                    }
+                case .chevron:
+                    updateStatusItemVisibility(true)
+                    button.appearsDisabled = false
+
+                    button.image = switch identifier {
+                    case .hidden:
+                        ControlItemImage.builtin(.chevronLarge).nsImage(for: appState)
+                    case .alwaysHidden:
+                        ControlItemImage.builtin(.chevronSmall).nsImage(for: appState)
+                    case .visible: nil
+                    }
+                }
             case .hideSection:
                 updateStatusItemVisibility(true)
                 button.appearsDisabled = true
@@ -388,55 +409,6 @@ final class ControlItem {
             }
         }
     }
-
-    /// Draws the section divider for the current divider style.
-    private func applyDividerStyle(to button: NSStatusBarButton, appState: AppState, isDimmed: Bool) {
-        let native = NativeMenuBarManager.usesNativeBackend
-        if native {
-            let hasDivider = appState.settings.advanced.sectionDividerStyle != .noDivider
-            setSuppressedByDividerStyle(!hasDivider, appState: appState)
-        }
-        switch appState.settings.advanced.sectionDividerStyle {
-        case .noDivider where native:
-            button.appearsDisabled = true
-            button.isHighlighted = false
-        case .noDivider:
-            updateStatusItemVisibility(false)
-            button.appearsDisabled = true
-            button.isHighlighted = false
-
-            if appState.isDraggingMenuBarItem && appState.settings.advanced.showAllSectionsOnUserDrag {
-                // We still want a subtle marker between sections.
-                button.title = "|"
-            }
-        case .chevron:
-            updateStatusItemVisibility(true)
-            button.appearsDisabled = isDimmed
-
-            button.image = switch identifier {
-            case .hidden:
-                ControlItemImage.builtin(.chevronLarge).nsImage(for: appState)
-            case .alwaysHidden:
-                ControlItemImage.builtin(.chevronSmall).nsImage(for: appState)
-            case .visible: nil
-            }
-        case .line:
-            updateStatusItemVisibility(true)
-            button.appearsDisabled = isDimmed
-            button.image = Self.dividerLineImage
-        }
-    }
-
-    /// A thin vertical line, drawn as a template image so it follows the menu bar tint.
-    private static let dividerLineImage: NSImage = {
-        let image = NSImage(size: NSSize(width: 6, height: 16), flipped: false) { _ in
-            NSColor.black.setFill()
-            NSBezierPath(rect: NSRect(x: 2.5, y: 1, width: 1, height: 14)).fill()
-            return true
-        }
-        image.isTemplate = true
-        return image
-    }()
 
     /// Updates the visibility of the status item.
     ///
@@ -453,8 +425,7 @@ final class ControlItem {
 
         if isVisible {
             constraint?.isActive = true
-            // The native backend sizes the item by whether a divider is drawn, not by section state.
-            statusItem.length = NativeMenuBarManager.usesNativeBackend ? Lengths.standard : identifier.length(for: state)
+            statusItem.length = identifier.length(for: state)
         } else {
             let showOnDrag = appState.settings.advanced.showAllSectionsOnUserDrag
             let isDragging = appState.isDraggingMenuBarItem
@@ -471,23 +442,14 @@ final class ControlItem {
         }
     }
 
-    /// Removes or restores the status item for the native backend's divider style.
-    private func setSuppressedByDividerStyle(_ suppressed: Bool, appState: AppState) {
-        guard suppressed != isSuppressedByDividerStyle else {
-            return
+    /// Keeps a section divider out of the menu bar on the native backend.
+    private func suppressOnNativeBackend(appState: AppState) {
+        let isSectionEnabled = identifier != .alwaysHidden || appState.settings.advanced.enableAlwaysHiddenSection
+        if isSuppressedOnNativeBackend != isSectionEnabled {
+            isSuppressedOnNativeBackend = isSectionEnabled
         }
-        if suppressed {
-            guard statusItem.isVisible else {
-                // Already removed, as the section is disabled.
-                return
-            }
-            isSuppressedByDividerStyle = true
+        if statusItem.isVisible {
             hideStatusItemKeepingPosition()
-        } else {
-            isSuppressedByDividerStyle = false
-            if identifier != .alwaysHidden || appState.settings.advanced.enableAlwaysHiddenSection {
-                statusItem.isVisible = true
-            }
         }
     }
 
@@ -496,8 +458,11 @@ final class ControlItem {
         guard !isAddedToMenuBar else {
             return
         }
+        if NativeMenuBarManager.usesNativeBackend && isSectionDivider {
+            isSuppressedOnNativeBackend = true
+            return
+        }
         statusItem.isVisible = true
-        updateStatusItem()
     }
 
     /// Removes the control item from the menu bar.
@@ -505,7 +470,7 @@ final class ControlItem {
         guard isAddedToMenuBar else {
             return
         }
-        isSuppressedByDividerStyle = false
+        isSuppressedOnNativeBackend = false
         hideStatusItemKeepingPosition()
     }
 

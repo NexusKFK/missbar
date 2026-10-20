@@ -21,7 +21,7 @@ enum HotkeyAction: String, Codable, CaseIterable {
     var isAvailable: Bool {
         guard NativeMenuBarManager.usesNativeBackend else { return true }
         return switch self {
-        case .searchMenuBarItems, .temporarilyShowMenuBarItem, .enableIceBar: false
+        case .searchMenuBarItems, .temporarilyShowMenuBarItem, .enableIceBar, .toggleSectionDividerIcons: false
         default: true
         }
     }

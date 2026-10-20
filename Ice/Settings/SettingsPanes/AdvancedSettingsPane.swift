@@ -22,7 +22,10 @@ struct AdvancedSettingsPane: View {
             } content: {
                 enableAlwaysHiddenSection
                 showAllSectionsOnUserDrag
-                sectionDividerStyle
+                if !NativeMenuBarManager.usesNativeBackend {
+                    // Section dividers are never shown on macOS 27; separators replace them.
+                    sectionDividerStyle
+                }
             }
             DragonSection {
                 Text(L("app.advanced.section.triggers"))

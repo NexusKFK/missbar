@@ -17,7 +17,10 @@ struct HotkeysSettingsPane: View {
             } content: {
                 hotkeyRecorder(forSection: .hidden)
                 hotkeyRecorder(forSection: .alwaysHidden)
-                hotkeyRecorder(forAction: .toggleSectionDividerIcons)
+                if !NativeMenuBarManager.usesNativeBackend {
+                    // Section dividers are never shown on macOS 27; separators replace them.
+                    hotkeyRecorder(forAction: .toggleSectionDividerIcons)
+                }
             }
             DragonSection {
                 Text(L("app.hotkeys.section.menuBarItems"))

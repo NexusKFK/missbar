@@ -15,7 +15,6 @@
 "app.advanced.addCurrentApp" = "Add Current App";
 "app.advanced.dividerStyle" = "Section divider style";
 "app.advanced.dividerStyle.chevron" = "Chevron";
-"app.advanced.dividerStyle.line" = "Line";
 "app.advanced.enableAlwaysHidden" = "Enable the always-hidden section";
 "app.advanced.hideAppMenus" = "Hide app menus when showing menu bar items";
 "app.advanced.hideAppMenus.note" = "Make more room in the menu bar by hiding the current app menus if needed. macOS requires missbar to make itself visible in the Dock while this setting is in effect.";
@@ -164,7 +163,7 @@
 "app.icon.ellipsis" = "Ellipsis";
 "app.icon.iceCube" = "Ice Cube";
 "app.icon.sunglasses" = "Sunglasses";
-"app.layout.addSpacer" = "Add Spacer";
+"app.layout.addSpacer" = "Add Separator";
 "app.layout.alert.notEnoughRoom.title" = "Not enough room to show \"%@\"";
 "app.layout.alert.notMovable.message" = "macOS prohibits \"%@\" from being moved.";
 "app.layout.alert.notMovable.title" = "Menu bar item is not movable.";
@@ -200,9 +199,17 @@
 "app.layout.restoreIceIcon" = "Restore missbar Icon";
 "app.layout.saveCurrent" = "Save Current Layout";
 "app.layout.section.profiles" = "Profiles";
-"app.layout.section.spacers" = "Spacers";
-"app.layout.spacerName" = "Spacer %d";
-"app.layout.spacers.note" = "Add flexible space between menu bar items.";
+"app.layout.section.spacers" = "Separators";
+"app.layout.spacerName" = "Separator %d";
+"app.layout.spacer.style" = "Style";
+"app.layout.spacer.style.blank" = "Blank";
+"app.layout.spacer.style.line" = "Line";
+"app.layout.spacer.style.text" = "Text";
+"app.layout.spacer.width" = "Width";
+"app.layout.spacer.thickness" = "Thickness";
+"app.layout.spacer.textPlaceholder" = "Text or emoji";
+"app.layout.spacer.openSettings" = "Separator Settings…";
+"app.layout.spacers.note" = "Separate menu bar items with a line, blank space, or text. Hold ⌘ and drag a separator to place it; click it to change or delete it.";
 "app.layout.updateProfile" = "Update";
 "app.menu.editAppearance" = "Edit Menu Bar Appearance…";
 "app.menu.hideSection" = "Hide %@ Section";

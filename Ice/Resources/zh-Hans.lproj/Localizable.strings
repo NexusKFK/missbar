@@ -15,7 +15,6 @@
 "app.advanced.addCurrentApp" = "添加当前 App";
 "app.advanced.dividerStyle" = "区段分隔线样式";
 "app.advanced.dividerStyle.chevron" = "尖角";
-"app.advanced.dividerStyle.line" = "竖线";
 "app.advanced.enableAlwaysHidden" = "启用“始终隐藏”区段";
 "app.advanced.hideAppMenus" = "显示菜单栏项目时隐藏 App 菜单";
 "app.advanced.hideAppMenus.note" = "在需要时隐藏当前 App 的菜单，为菜单栏腾出空间。此设置生效期间，macOS 要求 missbar 在程序坞中显示自身。";
@@ -164,7 +163,7 @@
 "app.icon.ellipsis" = "省略号";
 "app.icon.iceCube" = "冰块";
 "app.icon.sunglasses" = "太阳镜";
-"app.layout.addSpacer" = "添加间隔符";
+"app.layout.addSpacer" = "添加分隔符";
 "app.layout.alert.notEnoughRoom.title" = "没有足够空间显示“%@”";
 "app.layout.alert.notMovable.message" = "macOS 不允许移动“%@”。";
 "app.layout.alert.notMovable.title" = "该菜单栏项目无法移动。";
@@ -183,9 +182,17 @@
 "app.layout.restoreIceIcon" = "恢复 missbar 图标";
 "app.layout.saveCurrent" = "存储当前布局";
 "app.layout.section.profiles" = "描述文件";
-"app.layout.section.spacers" = "间隔符";
-"app.layout.spacerName" = "间隔符 %d";
-"app.layout.spacers.note" = "在菜单栏项目之间添加弹性间距。";
+"app.layout.section.spacers" = "分隔符";
+"app.layout.spacerName" = "分隔符 %d";
+"app.layout.spacer.style" = "样式";
+"app.layout.spacer.style.blank" = "空白";
+"app.layout.spacer.style.line" = "竖线";
+"app.layout.spacer.style.text" = "文字";
+"app.layout.spacer.width" = "宽度";
+"app.layout.spacer.thickness" = "粗细";
+"app.layout.spacer.textPlaceholder" = "文字或 emoji";
+"app.layout.spacer.openSettings" = "分隔符设置…";
+"app.layout.spacers.note" = "用竖线、空白或文字分隔菜单栏图标。按住 ⌘ 拖动分隔符来摆放位置；点击分隔符可以修改或删除。";
 "app.layout.updateProfile" = "更新";
 "app.menu.editAppearance" = "编辑菜单栏外观…";
 "app.menu.hideSection" = "隐藏%@区段";

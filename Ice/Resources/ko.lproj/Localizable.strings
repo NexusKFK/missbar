@@ -15,7 +15,6 @@
 "app.advanced.addCurrentApp" = "현재 앱 추가";
 "app.advanced.dividerStyle" = "섹션 구분선 스타일";
 "app.advanced.dividerStyle.chevron" = "갈매기형";
-"app.advanced.dividerStyle.line" = "세로선";
 "app.advanced.enableAlwaysHidden" = "항상 숨김 섹션 사용";
 "app.advanced.hideAppMenus" = "메뉴 막대 항목을 표시할 때 앱 메뉴 가리기";
 "app.advanced.hideAppMenus.note" = "필요할 때 현재 앱의 메뉴를 가려 메뉴 막대의 공간을 확보합니다. 이 설정이 켜져 있는 동안 macOS는 missbar를 Dock에 표시하도록 요구합니다.";
@@ -164,7 +163,7 @@
 "app.icon.ellipsis" = "말줄임표";
 "app.icon.iceCube" = "얼음 조각";
 "app.icon.sunglasses" = "선글라스";
-"app.layout.addSpacer" = "간격 조절기 추가";
+"app.layout.addSpacer" = "구분자 추가";
 "app.layout.alert.notEnoughRoom.title" = "\"%@\"을(를) 표시할 공간이 부족합니다";
 "app.layout.alert.notMovable.message" = "macOS에서 \"%@\"의 이동을 허용하지 않습니다.";
 "app.layout.alert.notMovable.title" = "이 메뉴 막대 항목은 이동할 수 없습니다.";
@@ -183,9 +182,17 @@
 "app.layout.restoreIceIcon" = "missbar 아이콘 복원";
 "app.layout.saveCurrent" = "현재 레이아웃 저장";
 "app.layout.section.profiles" = "프로파일";
-"app.layout.section.spacers" = "간격 조절기";
-"app.layout.spacerName" = "간격 조절기 %d";
-"app.layout.spacers.note" = "메뉴 막대 항목 사이에 가변 공간을 추가합니다.";
+"app.layout.section.spacers" = "구분자";
+"app.layout.spacerName" = "구분자 %d";
+"app.layout.spacer.style" = "스타일";
+"app.layout.spacer.style.blank" = "빈 공간";
+"app.layout.spacer.style.line" = "선";
+"app.layout.spacer.style.text" = "텍스트";
+"app.layout.spacer.width" = "너비";
+"app.layout.spacer.thickness" = "두께";
+"app.layout.spacer.textPlaceholder" = "텍스트 또는 이모지";
+"app.layout.spacer.openSettings" = "구분자 설정…";
+"app.layout.spacers.note" = "선, 빈 공간 또는 텍스트로 메뉴 막대 항목을 구분합니다. ⌘를 누른 채 구분자를 드래그해 배치하고, 클릭하면 변경하거나 삭제할 수 있습니다.";
 "app.layout.updateProfile" = "업데이트";
 "app.menu.editAppearance" = "메뉴 막대 모양 편집…";
 "app.menu.hideSection" = "%@ 섹션 가리기";

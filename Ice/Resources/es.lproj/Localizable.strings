@@ -15,7 +15,6 @@
 "app.advanced.addCurrentApp" = "Añadir la app actual";
 "app.advanced.dividerStyle" = "Estilo del separador de secciones";
 "app.advanced.dividerStyle.chevron" = "Galón";
-"app.advanced.dividerStyle.line" = "Línea";
 "app.advanced.enableAlwaysHidden" = "Activar la sección siempre oculta";
 "app.advanced.hideAppMenus" = "Ocultar los menús de la app al mostrar elementos de la barra de menús";
 "app.advanced.hideAppMenus.note" = "Libera espacio en la barra de menús ocultando los menús de la app actual cuando haga falta. macOS obliga a missbar a mostrarse en el Dock mientras este ajuste está activo.";
@@ -164,7 +163,7 @@
 "app.icon.ellipsis" = "Puntos suspensivos";
 "app.icon.iceCube" = "Cubito de hielo";
 "app.icon.sunglasses" = "Gafas de sol";
-"app.layout.addSpacer" = "Añadir espaciador";
+"app.layout.addSpacer" = "Añadir separador";
 "app.layout.alert.notEnoughRoom.title" = "No hay espacio suficiente para mostrar \"%@\"";
 "app.layout.alert.notMovable.message" = "macOS impide mover \"%@\".";
 "app.layout.alert.notMovable.title" = "El elemento de la barra de menús no se puede mover.";
@@ -183,9 +182,17 @@
 "app.layout.restoreIceIcon" = "Restaurar el icono de missbar";
 "app.layout.saveCurrent" = "Guardar la disposición actual";
 "app.layout.section.profiles" = "Perfiles";
-"app.layout.section.spacers" = "Espaciadores";
-"app.layout.spacerName" = "Espaciador %d";
-"app.layout.spacers.note" = "Añade espacio flexible entre los elementos de la barra de menús.";
+"app.layout.section.spacers" = "Separadores";
+"app.layout.spacerName" = "Separador %d";
+"app.layout.spacer.style" = "Estilo";
+"app.layout.spacer.style.blank" = "Espacio";
+"app.layout.spacer.style.line" = "Línea";
+"app.layout.spacer.style.text" = "Texto";
+"app.layout.spacer.width" = "Ancho";
+"app.layout.spacer.thickness" = "Grosor";
+"app.layout.spacer.textPlaceholder" = "Texto o emoji";
+"app.layout.spacer.openSettings" = "Ajustes del separador…";
+"app.layout.spacers.note" = "Separa los elementos de la barra de menús con una línea, un espacio o texto. Mantén pulsada ⌘ y arrastra un separador para colocarlo; haz clic en él para cambiarlo o eliminarlo.";
 "app.layout.updateProfile" = "Actualizar";
 "app.menu.editAppearance" = "Editar la apariencia de la barra de menús…";
 "app.menu.hideSection" = "Ocultar la sección %@";
