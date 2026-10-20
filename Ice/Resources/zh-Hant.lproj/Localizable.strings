@@ -15,6 +15,7 @@
 "app.advanced.addCurrentApp" = "加入目前 App";
 "app.advanced.dividerStyle" = "區段分隔線樣式";
 "app.advanced.dividerStyle.chevron" = "尖角";
+"app.advanced.dividerStyle.line" = "豎線";
 "app.advanced.enableAlwaysHidden" = "啟用「總是隱藏」區段";
 "app.advanced.hideAppMenus" = "顯示選單列項目時隱藏 App 選單";
 "app.advanced.hideAppMenus.note" = "在需要時隱藏目前 App 的選單，為選單列騰出空間。此設定生效期間，macOS 要求 missbar 在 Dock 中顯示自身。";

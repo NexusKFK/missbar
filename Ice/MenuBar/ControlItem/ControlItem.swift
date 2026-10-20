@@ -363,46 +363,64 @@ final class ControlItem {
 
             button.image = image
         case .hidden, .alwaysHidden:
+            if NativeMenuBarManager.usesNativeBackend {
+                // The native backend never expands the item to hide others, so the divider
+                // is purely a visual marker and looks the same in both states. Without a
+                // divider style, collapse the item instead of leaving an empty slot.
+                applyDividerStyle(to: button, appState: appState, isDimmed: state == .hideSection)
+                return
+            }
             switch state {
             case .showSection:
-                switch appState.settings.advanced.sectionDividerStyle {
-                case .noDivider:
-                    updateStatusItemVisibility(false)
-                    button.appearsDisabled = true
-                    button.isHighlighted = false
-
-                    if appState.isDraggingMenuBarItem && appState.settings.advanced.showAllSectionsOnUserDrag {
-                        // We still want a subtle marker between sections.
-                        button.title = "|"
-                    }
-                case .chevron:
-                    updateStatusItemVisibility(true)
-                    button.appearsDisabled = false
-
-                    button.image = switch identifier {
-                    case .hidden:
-                        ControlItemImage.builtin(.chevronLarge).nsImage(for: appState)
-                    case .alwaysHidden:
-                        ControlItemImage.builtin(.chevronSmall).nsImage(for: appState)
-                    case .visible: nil
-                    }
-                }
+                applyDividerStyle(to: button, appState: appState, isDimmed: false)
             case .hideSection:
-                if NativeMenuBarManager.usesNativeBackend,
-                   appState.settings.advanced.sectionDividerStyle == .noDivider
-                {
-                    // The native backend never expands the item to hide others, so with no
-                    // divider style there is nothing to draw: collapse it instead of leaving
-                    // an empty slot in the menu bar.
-                    updateStatusItemVisibility(false)
-                } else {
-                    updateStatusItemVisibility(true)
-                }
+                updateStatusItemVisibility(true)
                 button.appearsDisabled = true
                 button.isHighlighted = false
             }
         }
     }
+
+    /// Draws the section divider for the current divider style.
+    private func applyDividerStyle(to button: NSStatusBarButton, appState: AppState, isDimmed: Bool) {
+        switch appState.settings.advanced.sectionDividerStyle {
+        case .noDivider:
+            updateStatusItemVisibility(false)
+            button.appearsDisabled = true
+            button.isHighlighted = false
+
+            if appState.isDraggingMenuBarItem && appState.settings.advanced.showAllSectionsOnUserDrag {
+                // We still want a subtle marker between sections.
+                button.title = "|"
+            }
+        case .chevron:
+            updateStatusItemVisibility(true)
+            button.appearsDisabled = isDimmed
+
+            button.image = switch identifier {
+            case .hidden:
+                ControlItemImage.builtin(.chevronLarge).nsImage(for: appState)
+            case .alwaysHidden:
+                ControlItemImage.builtin(.chevronSmall).nsImage(for: appState)
+            case .visible: nil
+            }
+        case .line:
+            updateStatusItemVisibility(true)
+            button.appearsDisabled = isDimmed
+            button.image = Self.dividerLineImage
+        }
+    }
+
+    /// A thin vertical line, drawn as a template image so it follows the menu bar tint.
+    private static let dividerLineImage: NSImage = {
+        let image = NSImage(size: NSSize(width: 6, height: 16), flipped: false) { _ in
+            NSColor.black.setFill()
+            NSBezierPath(rect: NSRect(x: 2.5, y: 1, width: 1, height: 14)).fill()
+            return true
+        }
+        image.isTemplate = true
+        return image
+    }()
 
     /// Updates the visibility of the status item.
     ///
@@ -419,7 +437,8 @@ final class ControlItem {
 
         if isVisible {
             constraint?.isActive = true
-            statusItem.length = identifier.length(for: state)
+            // The native backend sizes the item by whether a divider is drawn, not by section state.
+            statusItem.length = NativeMenuBarManager.usesNativeBackend ? Lengths.standard : identifier.length(for: state)
         } else {
             let showOnDrag = appState.settings.advanced.showAllSectionsOnUserDrag
             let isDragging = appState.isDraggingMenuBarItem

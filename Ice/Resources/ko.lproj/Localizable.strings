@@ -15,6 +15,7 @@
 "app.advanced.addCurrentApp" = "현재 앱 추가";
 "app.advanced.dividerStyle" = "섹션 구분선 스타일";
 "app.advanced.dividerStyle.chevron" = "갈매기형";
+"app.advanced.dividerStyle.line" = "세로선";
 "app.advanced.enableAlwaysHidden" = "항상 숨김 섹션 사용";
 "app.advanced.hideAppMenus" = "메뉴 막대 항목을 표시할 때 앱 메뉴 가리기";
 "app.advanced.hideAppMenus.note" = "필요할 때 현재 앱의 메뉴를 가려 메뉴 막대의 공간을 확보합니다. 이 설정이 켜져 있는 동안 macOS는 missbar를 Dock에 표시하도록 요구합니다.";

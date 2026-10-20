@@ -15,6 +15,7 @@
 "app.advanced.addCurrentApp" = "添加当前 App";
 "app.advanced.dividerStyle" = "区段分隔线样式";
 "app.advanced.dividerStyle.chevron" = "尖角";
+"app.advanced.dividerStyle.line" = "竖线";
 "app.advanced.enableAlwaysHidden" = "启用“始终隐藏”区段";
 "app.advanced.hideAppMenus" = "显示菜单栏项目时隐藏 App 菜单";
 "app.advanced.hideAppMenus.note" = "在需要时隐藏当前 App 的菜单，为菜单栏腾出空间。此设置生效期间，macOS 要求 missbar 在程序坞中显示自身。";

@@ -15,6 +15,7 @@
 "app.advanced.addCurrentApp" = "Añadir la app actual";
 "app.advanced.dividerStyle" = "Estilo del separador de secciones";
 "app.advanced.dividerStyle.chevron" = "Galón";
+"app.advanced.dividerStyle.line" = "Línea";
 "app.advanced.enableAlwaysHidden" = "Activar la sección siempre oculta";
 "app.advanced.hideAppMenus" = "Ocultar los menús de la app al mostrar elementos de la barra de menús";
 "app.advanced.hideAppMenus.note" = "Libera espacio en la barra de menús ocultando los menús de la app actual cuando haga falta. macOS obliga a missbar a mostrarse en el Dock mientras este ajuste está activo.";
